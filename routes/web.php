@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Frontend\PageController;
+use App\Http\Controllers\Auth\AdminLoginController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +14,13 @@ use App\Http\Controllers\Frontend\PageController;
 | contains the "web" middleware group. Now create something great!
 |
 */
-
-
+//user auth
+Auth::routes();
+//admin user auth
 Route::get('/',[PageController::class, 'home'])->name('home');
+Route::get('admin/login',[AdminLoginController::class, 'showLoginForm'])->name('geta.admin.login');
+Route::post('admin/login',[AdminLoginController::class, 'login'])->name('post.admin.login');
+//home
+Route::get('admin', function(){
+    return "adminpage";
+});
