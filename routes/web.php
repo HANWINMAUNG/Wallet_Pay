@@ -18,8 +18,9 @@ use App\Http\Controllers\Auth\AdminLoginController;
 Auth::routes();
 //admin user auth
 Route::get('/',[PageController::class, 'home'])->name('home');
-Route::get('admin/login',[AdminLoginController::class, 'showLoginForm'])->name('geta.admin.login');
+Route::get('admin/login',[AdminLoginController::class, 'showLoginForm'])->name('get.admin.login');
 Route::post('admin/login',[AdminLoginController::class, 'login'])->name('post.admin.login');
+Route::post('admin/logout',[AdminLoginController::class, 'logout'])->name('admin.logout');
 //home
 Route::get('admin', function(){
     return "adminpage";
