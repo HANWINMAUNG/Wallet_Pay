@@ -17,6 +17,10 @@
 	<title>Wallet_Pay</title>
 
 	<link href="{{ asset('backend/assets/css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend/assets/css/bootstrap5.min.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend/assets/css/jquery.dataTables.min.css') }}" rel="stylesheet">
+	
 	<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     @stack('header')
 </head>
@@ -32,6 +36,11 @@
 	</div>
 
 	<script src="{{ asset('backend/assets/js/app.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/code.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/bootstrap.min.js') }}"></script>
+	<script src="{{ asset('backend/assets/js/sweetalert2.min.js') }}"></script>
+	<script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
@@ -252,6 +261,31 @@
 				nextArrow: "<span title=\"Next month\">&raquo;</span>",
 				defaultDate: defaultDate
 			});
+		});
+	</script>
+	<script>
+		$(document).ready(function(){
+			$('.back-btn').on('click' , function(){
+				window.history.go(-1);
+				return false;
+			});
+			const Toast = Swal.mixin({
+			toast: true,
+			position: 'top-end',
+			showConfirmButton: false,
+			timer: 3000,
+			timerProgressBar: true,
+			didOpen: (toast) => {
+				toast.addEventListener('mouseenter', Swal.stopTimer)
+				toast.addEventListener('mouseleave', Swal.resumeTimer)
+			}
+			})
+             @if(session('create'))
+			Toast.fire({
+			icon: 'success',
+			title: "{{ session('create') }}"
+			})
+			@endif
 		});
 	</script>
     @stack('script')

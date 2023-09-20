@@ -137,7 +137,7 @@
 								</div>
 							</div>
 						</li>
-						<li class="nav-item dropdown">
+						<li class="nav-item dropdown" style="padding-right:30px;">
 							<a class="nav-icon dropdown-toggle d-inline-block d-sm-none" href="#" data-bs-toggle="dropdown">
                                 <i class="align-middle" data-feather="settings"></i>
                             </a>
