@@ -11,16 +11,16 @@
 						<div class="card">
 							<div class="card-body">
 									<div class = "p-2">
-										<table class = "table table-hover data-table">
+										<table class = "table table-hover" id="data-table">
 											<thead>
 												<tr>
-													<th style="text-align:center;">Admin Name</th>
-													<th style="text-align:center;">Email</th>
-													<th style="text-align:center;">Phone</th>
-													<th style="text-align:center;">IP</th>
-													<th style="text-align:center;">User Agent</th>
-													<th style="text-align:center;">Joined Date</th>
-													<th style="text-align:center;">Actions</th>													
+													<th style="">Admin Name</th>
+													<th style="">Email</th>
+													<th style="">Phone</th>
+													<th style="">IP</th>
+													<th style="">User Agent</th>
+													<th style="">Joined Date</th>
+													<th style="">Actions</th>													
 												</tr>
 											</thead>
 											<tbody class = "">
@@ -38,7 +38,7 @@
 
 		$(function () {
 
-		new DataTable('.data-table',{
+		new DataTable('#data-table',{
 
 			processing: true,
 
