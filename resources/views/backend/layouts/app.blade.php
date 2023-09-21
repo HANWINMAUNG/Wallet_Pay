@@ -17,6 +17,7 @@
 	<title>Wallet_Pay</title>
 
 	<link href="{{ asset('backend/assets/css/app.css') }}" rel="stylesheet">
+	<link href="{{ asset('backend/assets/css/style.css') }}" rel="stylesheet">
 	<link href="{{ asset('backend/assets/css/bootstrap.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('backend/assets/css/bootstrap5.min.css') }}" rel="stylesheet">
 	<link href="{{ asset('backend/assets/css/jquery.dataTables.min.css') }}" rel="stylesheet">
@@ -40,7 +41,7 @@
 	<script src="{{ asset('backend/assets/js/jquery.min.js') }}"></script>
 	<script src="{{ asset('backend/assets/js/bootstrap.min.js') }}"></script>
 	<script src="{{ asset('backend/assets/js/sweetalert2.min.js') }}"></script>
-	<script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js')}}"></script>
+	<script type="text/javascript" src="{{ url('vendor/jsvalidation/js/jsvalidation.js') }}"></script>
 
 	<script>
 		document.addEventListener("DOMContentLoaded", function() {
