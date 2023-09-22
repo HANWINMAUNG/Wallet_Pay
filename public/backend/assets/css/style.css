@@ -6,3 +6,6 @@
 .action-icon a:hover{
     background-color: #f5f5f5;
 }
+.action-icon {
+    width:100%;
+}

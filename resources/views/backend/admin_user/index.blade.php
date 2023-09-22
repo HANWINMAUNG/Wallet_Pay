@@ -20,6 +20,7 @@
 													<th style="">IP</th>
 													<th style="">User Agent</th>
 													<th style="">Joined Date</th>
+													<th style="">Updated Date</th>
 													<th style="">Actions</th>													
 												</tr>
 											</thead>
@@ -46,6 +47,10 @@
 
 			ajax: "{{ route('admin-user.index') }}",
 
+			order: [
+				[6,'desc']
+			],
+
 			columns: [
 
 				{data: 'name', name: 'name',class:'text-center'},
@@ -58,9 +63,12 @@
 
 				{data: 'user_agent', name: 'user_agent',class:'text-center'},
 
-				{data: 'created_at', name: 'created_at',class:'text-center'},
+				{data: 'created_at', name: 'created_at',class:'text-center',searchable: false,sortable:false},
 
-				{data: 'action', name: 'action',class:'text-center'},
+				{data: 'updated_at', name: 'updated_at',class:'text-center',searchable: false,sortable:false},
+
+				{data: 'action', name: 'action',class:'text-center',searchable: false,sortable:false},
+				
 			]
 		}); 
 		$(document).on('click','.delete',function(e){
