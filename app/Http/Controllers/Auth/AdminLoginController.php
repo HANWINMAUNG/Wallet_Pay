@@ -37,4 +37,18 @@ class AdminLoginController extends Controller
     {
         return view('auth.admin_login');
     }
+    /**
+     * The user has been authenticated.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function authenticated(Request $request, $user)
+    {
+        $user->ip = $request->ip();
+        $user->user_agent = $request->server('HTTP_USER_AGENT');
+        $user->update();
+        return redirect($this->redirectTo);
+    }
 }
