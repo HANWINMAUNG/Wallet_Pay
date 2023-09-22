@@ -8,12 +8,12 @@
 	<meta name="description" content="Responsive Admin &amp; Dashboard Template based on Bootstrap 5">
 	<meta name="author" content="AdminKit">
 	<meta name="keywords" content="adminkit, bootstrap, bootstrap 5, admin, dashboard, template, responsive, css, sass, html, theme, front-end, ui kit, web">
-
+    
 	<link rel="preconnect" href="https://fonts.gstatic.com">
 	<link rel="shortcut icon" href="{{ asset('backend/assets/img/icons/icon-48x48.png') }}" />
 
 	<link rel="canonical" href="https://demo-basic.adminkit.io/" />
-
+    <meta name="csrf-token" content="{{csrf_token()}}">
 	<title>Wallet_Pay</title>
 
 	<link href="{{ asset('backend/assets/css/app.css') }}" rel="stylesheet">
@@ -252,7 +252,7 @@
 			});
 		});
 	</script>
-	<script>
+	<!-- <script>
 		document.addEventListener("DOMContentLoaded", function() {
 			var date = new Date(Date.now() - 5 * 24 * 60 * 60 * 1000);
 			var defaultDate = date.getUTCFullYear() + "-" + (date.getUTCMonth() + 1) + "-" + date.getUTCDate();
@@ -263,9 +263,18 @@
 				defaultDate: defaultDate
 			});
 		});
-	</script>
+	</script> -->
 	<script>
 		$(document).ready(function(){
+			let token = document.head.querySelector('meta[name="csrf-token"]');
+		  if(token){
+			$.ajaxSetup({
+				headers : {
+					'X-CSRF_TOKEN' : token.cotent
+				}
+			});
+		  }
+
 			$('.back-btn').on('click' , function(){
 				window.history.go(-1);
 				return false;
@@ -281,10 +290,10 @@
 				toast.addEventListener('mouseleave', Swal.resumeTimer)
 			}
 			})
-             @if(session('create'))
+             @if(session('success'))
 			Toast.fire({
 			icon: 'success',
-			title: "{{ session('create') }}"
+			title: "{{ session('success') }}"
 			})
 			@endif
 		});

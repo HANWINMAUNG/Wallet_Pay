@@ -5,7 +5,7 @@
 				<div class="container-fluid p-0">
 					<h1 class="h3 mb-3"><strong>Admin User Edit</strong></h1>
 					<div class="py-3 d-flex flex-row-reverse">
-						<a href="" class="btn btn-secondary back-btn">Back <i class="align-middle" data-feather="arrow-left"></i></a>
+						<button class="btn btn-secondary back-btn">Back <i class="align-middle" data-feather="arrow-left"></i></button>
 					</div>
                     <div class="">
 						<div class="card">
@@ -14,7 +14,7 @@
                                         @include('backend.layouts.flash')
 										<form action="{{ route('admin-user.update' , $admin_user->id) }}" method="post" id="update">
                                             @csrf
-                                            @mehtod('PATCH')
+                                            @method('PATCH')
                                             <div class="from-group">
                                                 <label for="">Name</label>
                                                 <input type="text" name="name" value="{{ $admin_user->name }}" class="form-control">

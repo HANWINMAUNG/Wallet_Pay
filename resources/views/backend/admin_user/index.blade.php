@@ -11,7 +11,7 @@
 						<div class="card">
 							<div class="card-body">
 									<div class = "p-2">
-										<table class = "table table-hover" id="data-table">
+										<table class = "table table-hover" id="data-table" style="width:100%;">
 											<thead>
 												<tr>
 													<th style="">Admin Name</th>
@@ -38,7 +38,7 @@
 
 		$(function () {
 
-		new DataTable('#data-table',{
+		var table = new DataTable('#data-table',{
 
 			processing: true,
 
@@ -62,7 +62,27 @@
 
 				{data: 'action', name: 'action',class:'text-center'},
 			]
-			});     
-			});
+		}); 
+		$(document).on('click','.delete',function(e){
+			e.preventDefault();
+			var id = $(this).data('id');
+			Swal.fire({
+				title: 'Are you sure,you want to delete?',
+				showCancelButton: true,
+				confirmButtonText: 'Confirm',
+				}).then((result) => {
+				if (result.isConfirmed) {
+					$.ajax({
+                          url : '/admin/admin-user/' + id,
+						  type : 'DELETE',
+						  success : function(){
+							table.ajax.reload();
+						  }
+					});
+				}
+				})
+		});
+		
+		});
 </script>
 @endpush
