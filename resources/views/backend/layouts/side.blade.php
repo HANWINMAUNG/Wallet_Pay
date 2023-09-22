@@ -20,21 +20,9 @@
                         </a>
 					</li>
 
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-in.html">
-                          <i class="align-middle" data-feather="log-in"></i> <span class="align-middle">Sign In</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-sign-up.html">
-                             <i class="align-middle" data-feather="user-plus"></i> <span class="align-middle">Sign Up</span>
-                        </a>
-					</li>
-
-					<li class="sidebar-item">
-						<a class="sidebar-link" href="pages-blank.html">
-                             <i class="align-middle" data-feather="book"></i> <span class="align-middle">Blank</span>
+					<li class="sidebar-item @yield('user')">
+						<a class="sidebar-link" href="{{ route('user.index') }}">
+                            <i class="align-middle" data-feather="user"></i> <span class="align-middle">User</span>
                         </a>
 					</li>
 
