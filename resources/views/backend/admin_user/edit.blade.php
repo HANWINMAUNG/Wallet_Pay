@@ -44,7 +44,7 @@
 </main> 
 @endsection
 @push('script')
-{!! JsValidator::formRequest('App\Http\Requests\AdminUserRequest' , '#update') !!}
+{!! JsValidator::formRequest('App\Http\Requests\UpdateAdminUserRequest' , '#update') !!}
 <script type="text/javascript">
 </script>
 @endpush

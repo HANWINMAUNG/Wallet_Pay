@@ -2,11 +2,12 @@
 
 namespace App\Models;
 
+use App\Models\Wallet;
+use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -21,6 +22,10 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'phone',
+        'ip',
+        'user_agent',
+        'login_at'
     ];
 
     /**
@@ -44,4 +49,8 @@ class User extends Authenticatable
     public function setPasswordAttribute($value){
         $this->attributes['password'] = bcrypt($value);
     } 
+    public function Wallet()
+    {
+        return $this->hasOne(Wallet::class);
+    }
 }

@@ -23,20 +23,11 @@ class UserRequest extends FormRequest
      */
     public function rules()
     {
-        if($this->method() == 'PATCH'){
-            $id = $this->route('user');
-            return [
-                'name' =>'required',
-                'email' =>'required|email|unique:users,email,' . $id,
-                 'phone' =>'required|unique:users,phone,' . $id,
-            ];
-        }else{
                 return [
                     'name' =>'required',
                     'email' =>'required|email|unique:users,email',
                     'phone' =>'required|unique:users,phone',
                     'password' => 'required|min:6|max:20'
                 ];
-    }
     }
 }
