@@ -40,10 +40,6 @@
 		$(function () {
 
 		var table = new DataTable('#data-table',{
-
-			paging: false,
-
-			scrollCollapse: true,
 			
 			scrollX: true,
 
