@@ -7,6 +7,7 @@ use App\Models\User;
 use App\Models\Wallet;
 use Jenssegers\Agent\Agent;
 use Illuminate\Http\Request;
+use App\Helpers\UUIDGenerate;
 use Yajra\DataTables\DataTables;
 use App\Http\Requests\UserRequest;
 use Illuminate\Support\Facades\DB;
@@ -91,12 +92,12 @@ class UserController extends Controller
         DB::beginTransaction();
         try{
             $attributes = $request->validated();
-            User::create($attributes);
+            $user = User::create($attributes);
             Wallet::firstOrCreate([
-                'user_id' => $attributes->id,
+                'user_id' => $user->id,
             ],
             [
-                'account_number' => '13333333',
+                'account_number' => UUIDGenerate::accountNumber(),
                 'amount' => 0,
             ]
             );
@@ -104,7 +105,7 @@ class UserController extends Controller
             return redirect()->route('user.index')->with('success' , 'User is successfully created!');
         }catch(\Exception $e){
             DB::rollBack();
-            return back()->withErrors(['fail' => 'Something Wrong'])->withInput();
+            return back()->withErrors(['fail' => 'Something Wrong'.$e->getMessage()])->withInput();
         }
     }
 
@@ -139,10 +140,24 @@ class UserController extends Controller
      */
     public function update(UpdateUserRequest $request,$id)
     {
-         $user = User::findOrFail($id);
-        
-        $user->update();
-        return redirect()->route('user.index')->with('success' , 'User is successfully updated!'); 
+        DB::beginTransaction();
+        try{
+                $user = User::findOrFail($id);
+                $user->update();
+                Wallet::firstOrCreate([
+                    'user_id' => $user->id,
+                ],
+                [
+                    'account_number' => UUIDGenerate::accountNumber(),
+                    'amount' => 0,
+                ]
+                );
+                DB::commit();
+                return redirect()->route('user.index')->with('success' , 'User is successfully updated!');
+            }catch(\Exception $e){
+        DB::rollBack();
+        return back()->withErrors(['fail' => 'Something Wrong'.$e->getMessage()])->withInput();
+    } 
     }
 
     /**

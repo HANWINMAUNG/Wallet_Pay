@@ -270,7 +270,7 @@
 		  if(token){
 			$.ajaxSetup({
 				headers : {
-					'X_CSRF_TOKEN' : token.content
+					'X-CSRF-TOKEN' : token.content
 				}
 			});
 		  }
