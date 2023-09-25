@@ -8,6 +8,7 @@
    
     <title>@yield('title')</title>
     <link href="{{ asset('frontend/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('frontend/css/style.css') }}" rel="stylesheet">
     @stack('header')
 </head>
 <body>

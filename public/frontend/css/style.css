@@ -1,0 +1,36 @@
+body{
+    background: #EDEDF5;
+}
+.btn{
+    padding:10px; 
+}
+.btn-theme{
+    background-color: #5842E3;
+    color:#fff;
+ }
+ .btn-theme:hover{
+    background-color: #5842E3;
+    color:#fff;
+ }
+/*-------------Authform--------------*/
+.auth-form{
+    box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+    border: none;
+    border-radius: 10px;
+}
+.auth-form a{
+   text-decoration: none;
+   color:#333;
+}
+.auth-form a:hover{
+    color:#5842E3;
+ }
+ /*---------bottom meun--------*/
+ .bottom-meun{
+    background: #fff;
+    position:fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+ }
+ 

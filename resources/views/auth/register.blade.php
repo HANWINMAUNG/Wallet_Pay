@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center align-items-center" style="height:100vh;">
         <div class="col-md-8">
-            <div class="card p-4">
+            <div class="card p-4 auth-form">
                 <h3 class="text-center">Register</h3>
                 <p class="text-center text-info">Please fill to register form</p>
 
@@ -56,7 +56,7 @@
                                     </span>
                             @enderror 
                         </div>
-                        <button class="btn btn-primary btn-block my-3 form-control">Register</button>
+                        <button class="btn btn-theme btn-block my-3 form-control">Register</button>
                         <div class="d-flex justify-content-between">
                             <a href="{{ route('login') }}">Already have an account?</a>
                         </div>

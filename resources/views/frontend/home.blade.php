@@ -1,15 +1,7 @@
 @extends('frontend.layouts.app')
-
+@section('title','Home')
 @section('content')
-<div class="container">
-    <div class="row justify-content-center">
-        <div class="col-md-8">
-            <div class="card">
-                <div class="card-header">{{ __('Dashboard') }}</div>
-
-               <h3>Home Page</h3>
-            </div>
-        </div>
-    </div>
-</div>
+<div>
+  <h3 class="text-center">Home Page</h3>
+</div>          
 @endsection

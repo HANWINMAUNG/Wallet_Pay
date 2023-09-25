@@ -4,7 +4,7 @@
 <div class="container">
     <div class="row justify-content-center align-items-center" style="height:100vh;">
         <div class="col-md-6">
-            <div class="card p-4">
+            <div class="card p-4 auth-form">
                <h3 class="text-center">Login</h3>
                <p class="text-center text-info">Please fill to login form</p>
                 <div class="card-body">
@@ -29,9 +29,9 @@
                                     </span>
                             @enderror 
                         </div>
-                        <button class="btn btn-primary btn-block my-3 form-control">Login</button>
+                        <button class="btn btn-theme btn-block my-3 form-control">Login</button>
                         <div class="d-flex justify-content-between">
-                            <a href="{{ route('register') }}">Sign Up</a>
+                            <a href="{{ route('register') }}">Register Now</a>
                             @if (Route::has('password.request'))
                                     <a class="" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
