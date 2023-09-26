@@ -24,4 +24,5 @@ Route::post('admin/logout',[AdminLoginController::class, 'logout'])->name('admin
 //home
 Route::middleware('auth')->group(function(){
     Route::get('/',[PageController::class, 'home'])->name('home');
+    Route::get('profile',[PageController::class, 'profile'])->name('profile');
 });

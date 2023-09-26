@@ -1,5 +1,7 @@
 body{
     background: #EDEDF5;
+    font-size: 15px;
+    font-family: 'Opne Sans' , sans-serif;
 }
 .btn{
     padding:10px; 
@@ -25,6 +27,29 @@ body{
 .auth-form a:hover{
     color:#5842E3;
  }
+/*---------header meun--------*/
+ .header-meun{
+    background: #fff;
+    position:fixed;
+    top: 0;
+    right: 0;
+    left: 0;
+    z-index: 999;
+ }
+ .header-meun a{
+    text-decoration: none;
+    color:#333;
+    display: block;
+ }
+ .header-meun p{
+    text-decoration: none;
+    color:#333;
+    font-size:30px;
+ }
+ .hedader-meun a:hover{
+    color:#5842E3;
+    transition: .3s;
+ }
  /*---------bottom meun--------*/
  .bottom-meun{
     background: #fff;
@@ -33,4 +58,40 @@ body{
     right: 0;
     left: 0;
  }
- 
+ .bottom-meun a{
+    text-decoration: none;
+    color:#333;
+    display: block;
+ }
+ .bottom-meun a:hover{
+    color:#5842E3;
+    transition: .3s;
+ }
+ /*---------Main content--------*/
+ .content{
+    margin: 75px 0px;
+ }
+/*--------Account------*/
+.account{
+
+}
+.account .profile{
+   text-align: center;
+}
+.account .profile img{
+    width: 100px;
+    height: 100px;
+    border-radius: 100%;
+    padding: 5px;
+    border: 1px solid #ddd;
+    background: #fff;
+}
+.account .card{
+    border-radius: 10px;
+}
+.account .card-body{
+    padding-right: 0px;
+}
+.account .card-body span{
+    margin-right: 15px;
+}
