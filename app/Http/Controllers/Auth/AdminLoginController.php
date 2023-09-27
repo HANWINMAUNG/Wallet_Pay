@@ -37,6 +37,12 @@ class AdminLoginController extends Controller
     {
         return view('auth.admin_login');
     }
+
+    public function Logout()
+    {
+           Auth::guard('admin_user')->logout();
+           return route('get.admin.login');
+    } 
     /**
      * The user has been authenticated.
      *

@@ -40,7 +40,7 @@
 @endsection
 @push('script')
 <script>
-    $(document).ready(funcion(){
+    $(document).ready(function(){
         $(document).on('click','#logout',function(e){
 			e.preventDefault();
 			Swal.fire({
@@ -48,15 +48,15 @@
 				showCancelButton: true,
 				confirmButtonText: 'Confirm',
 				}).then((result) => {
-				//if (result.isConfirmed) {
-					// $.ajax({
-                    //       url : '/admin/admin-user/' + id,
-					// 	  type : 'DELETE',
-					// 	  success : function(){
-					// 		table.ajax.reload();
-					// 	  }
-					// });
-				//}
+				if (result.isConfirmed) {
+					$.ajax({
+                          url : "{{ route('user.logout') }}",
+						  type : 'POST',
+						  success : function(){
+                                window.location.replace("{{ route('profile') }}");
+						  }
+					});
+				}
 				})
 		});
     });

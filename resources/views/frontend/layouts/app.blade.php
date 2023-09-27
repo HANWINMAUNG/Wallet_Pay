@@ -49,6 +49,20 @@
     <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert2.min.js') }}"></script>
+    <script>
+        $(document).ready(function(){
+            let token = document.head.querySelector('meta[name="csrf-token"]');
+				if(token){
+					$.ajaxSetup({
+						headers : {
+							'X-CSRF-TOKEN' : token.content,
+                            'Content-Type' : 'application/json',
+                            'Accept' : 'application/json'
+						}
+					});
+				}
+        })
+    </script>
     @stack('script')
 </body>
 </html>

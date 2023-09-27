@@ -267,13 +267,13 @@
 	<script>
 		$(document).ready(function(){
 			let token = document.head.querySelector('meta[name="csrf-token"]');
-		  if(token){
-			$.ajaxSetup({
-				headers : {
-					'X-CSRF-TOKEN' : token.content
+				if(token){
+					$.ajaxSetup({
+						headers : {
+							'X-CSRF-TOKEN' : token.content
+						}
+					});
 				}
-			});
-		  }
 
 			$('.back-btn').on('click' , function(){
 				window.history.go(-1);

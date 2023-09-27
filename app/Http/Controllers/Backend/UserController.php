@@ -92,6 +92,7 @@ class UserController extends Controller
         DB::beginTransaction();
         try{
             $attributes = $request->validated();
+            $attributes['password'] = bcrypt($attributes['password']);
             $user = User::create($attributes);
             Wallet::firstOrCreate([
                 'user_id' => $user->id,
@@ -143,6 +144,7 @@ class UserController extends Controller
         DB::beginTransaction();
         try{
                 $user = User::findOrFail($id);
+                $user['password'] = bcrypt($user['password']);
                 $user->update();
                 Wallet::firstOrCreate([
                     'user_id' => $user->id,
