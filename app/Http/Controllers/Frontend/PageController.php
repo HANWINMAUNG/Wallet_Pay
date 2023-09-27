@@ -15,4 +15,8 @@ class PageController extends Controller
     {
         return view('frontend.profile');
     }
+    public function updatePassword()
+    {
+        return view('frontend.update_password');
+    }
 }
