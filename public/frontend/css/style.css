@@ -11,6 +11,11 @@ a:hover{
    text-decoration: none;
    color: #5842E3;
 }
+.card{
+   border-radius: 10px;
+   box-shadow: 0 1px 3px rgba(0,0,0,0.09);
+   border: none;
+}
 .btn{
     padding:10px 25px; 
 }
@@ -21,6 +26,10 @@ a:hover{
  .btn-theme:hover{
     background-color: #5842E3;
     color:#fff;
+ }
+
+ .invalid-feedback{
+   display: block;
  }
 /*-------------Authform--------------*/
 .auth-form{
@@ -49,7 +58,7 @@ a:hover{
     color:#333;
     display: block;
  }
- .header-meun p{
+ .header-meun .text-header{
     text-decoration: none;
     color:#333;
     font-size:30px;
@@ -111,13 +120,14 @@ a:hover{
 .account .card{
     border-radius: 10px;
 }
-/* .account .card-body{
+.account .card-body{
     padding-right: 0px;
-} */
+}
 .account .card-body span{
     margin-right: 15px;
 }
 /*-------update password------*/
 .update-password img{
-   width: 300px;
+   width: 50%;
+  height: auto;
 }
