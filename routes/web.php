@@ -29,4 +29,5 @@ Route::middleware('auth')->group(function(){
     Route::get('profile',[PageController::class, 'profile'])->name('profile');
     Route::get('update-password',[PageController::class, 'updatePassword'])->name('update-password');
     Route::post('update-password',[PageController::class, 'updatePasswordStore'])->name('update-password.store');
+    Route::get('wallet',[PageController::class, 'wallet'])->name('wallet');
 });

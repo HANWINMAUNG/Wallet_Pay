@@ -84,7 +84,7 @@ a:hover{
     color:#5842E3;
     transition: .3s;
  }
-
+/*-------sweet alert-------*/
  .swal2-popup{
    border-radius: 10px !important;
  }
@@ -104,7 +104,7 @@ a:hover{
  }
 /*--------Account------*/
 .account{
-
+   
 }
 .account .profile{
    text-align: center;
@@ -117,9 +117,6 @@ a:hover{
     border: 1px solid #ddd;
     background: #fff;
 }
-.account .card{
-    border-radius: 10px;
-}
 .account .card-body{
     padding-right: 0px;
 }
@@ -130,4 +127,74 @@ a:hover{
 .update-password img{
    width: 50%;
   height: auto;
+}
+/*--------scan tab---------*/
+.scan-tab{
+   width: 60px;
+   height: 60px;
+   background: #EDEDF5;
+   border-radius: 100%;
+   position: fixed;
+   bottom: 40px;
+   right: 0;
+   left: 0;
+   margin: 0 auto;
+   display: flex !important;
+   justify-content: center;
+   align-items: center;
+}
+.scan-tab .inside{
+   width: 52px;
+   height: 52px;
+   background: #fff;
+   display: flex;
+   border-radius: 100%;
+   justify-content: center;
+   align-items: center;
+   animation: glow 5s infinite;
+}
+.scan-tab .inside svg{
+   margin:0;
+}
+@keyframes glow{
+   0%{
+      box-shadow: 0 0 -10px #5842E3;
+   }
+   40%{
+      box-shadow: 0 0 15px #5842E3;
+   }
+   60%{
+      box-shadow: 0 0 15px #5842E3;
+   }
+   100%{
+      box-shadow: 0 0 -10px #5842E3;
+   }
+}
+/*-------wallet------*/
+.wallet{
+
+}
+.wallet .wallet-card{
+   background: #5842E3;
+   color: #fff;
+}
+.wallet .wallet-card span{
+   text-transform: uppercase;
+   font-size: 12px;
+   display: inline-block;
+   margin-bottom: 5px;
+   color: #EDEDF5;
+}
+.wallet .wallet-card h4{
+   font-size: 22px;
+   font-weight: 900;
+}
+.wallet .wallet-card h5{
+   font-size: 18px;
+   font-weight: 900;
+}
+.wallet .wallet-card p{
+   font-size: 16px;
+   font-weight: 900;
+   text-transform: uppercase;
 }
