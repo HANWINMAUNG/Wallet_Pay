@@ -30,4 +30,6 @@ Route::middleware('auth')->group(function(){
     Route::get('update-password',[PageController::class, 'updatePassword'])->name('update-password');
     Route::post('update-password',[PageController::class, 'updatePasswordStore'])->name('update-password.store');
     Route::get('wallet',[PageController::class, 'wallet'])->name('wallet');
+    Route::get('transfer',[PageController::class, 'transfer'])->name('transfer');
+    Route::post('transfer/confirm',[PageController::class, 'transferConfirm'])->name('transfer.confirm');
 });

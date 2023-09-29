@@ -61,7 +61,8 @@ a:hover{
  .header-meun .text-header{
     text-decoration: none;
     color:#333;
-    font-size:30px;
+    font-size:20px;
+    padding-top:10px;
  }
  .hedader-meun a:hover{
     color:#5842E3;
@@ -106,12 +107,12 @@ a:hover{
 .account{
    
 }
-.account .profile{
+ .profile{
    text-align: center;
 }
-.account .profile img{
-    width: 100px;
-    height: 100px;
+ .profile img{
+    width: 80px;
+    height: 80px;
     border-radius: 100%;
     padding: 5px;
     border: 1px solid #ddd;
@@ -197,4 +198,14 @@ a:hover{
    font-size: 16px;
    font-weight: 900;
    text-transform: uppercase;
+}
+/*---------Home----------*/
+.home .shortcut svg{
+   margin-right: 4px;
+}
+.home .function-box .card-body{
+   padding-right: 0px;
+}
+.home .function-box svg{
+   margin-right: 8px;
 }

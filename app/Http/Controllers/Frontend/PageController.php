@@ -6,13 +6,15 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Requests\TransferRequest;
 use App\Http\Requests\UpdatePasswordRequest;
 
 class PageController extends Controller
 {
     public function home()
     {
-        return view('frontend.home');
+        $user = auth()->guard('web')->user();
+        return view('frontend.home' ,['user' => $user]);
     }
     public function profile()
     {
@@ -37,5 +39,19 @@ class PageController extends Controller
     {
         $user = auth()->guard('web')->user();
         return view('frontend.wallet',['user' => $user]);
+    }
+    public function transfer()
+    {
+        $user = auth()->guard('web')->user();
+        return view('frontend.transfer',['user' => $user]);
+    }
+    public function transferConfirm(TransferRequest $request)
+    {
+        $attributes = $request->validated();
+        $user = auth()->guard('web')->user();
+        return view('frontend.transfer_confirm',[
+            'user' => $user,
+            'attributes' => $attributes
+        ]);
     }
 }
