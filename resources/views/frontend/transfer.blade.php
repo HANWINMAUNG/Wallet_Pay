@@ -31,7 +31,7 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="">Description</label>
-                        <textarea  name="description" class="form-control"></textarea>
+                        <textarea  name="description" class="form-control">{{ old('description') }}</textarea>
                     </div>
                     <button class="btn btn-theme btn-block mt-5 form-control">Continue</button>
                </form>

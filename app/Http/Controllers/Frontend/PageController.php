@@ -47,6 +47,9 @@ class PageController extends Controller
     }
     public function transferConfirm(TransferRequest $request)
     {
+        if($request->amount < 1000){
+            return back()->withErrors(['amount' => 'The amount must be minimum 1000 MMK'])->withInput();
+        }
         $attributes = $request->validated();
         $user = auth()->guard('web')->user();
         return view('frontend.transfer_confirm',[
