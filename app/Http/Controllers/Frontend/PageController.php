@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Frontend;
 
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
@@ -47,6 +48,10 @@ class PageController extends Controller
     }
     public function transferConfirm(TransferRequest $request)
     {
+        $check_phone = User::where('phone' , $request->phone)->first();
+        if(!$check_phone){
+            return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
+        }
         if($request->amount < 1000){
             return back()->withErrors(['amount' => 'The amount must be minimum 1000 MMK'])->withInput();
         }
@@ -55,6 +60,23 @@ class PageController extends Controller
         return view('frontend.transfer_confirm',[
             'user' => $user,
             'attributes' => $attributes
+        ]);
+    }
+    public function toAccountVerify(Request $request)
+    {
+        $userAuth = auth()->guard('web')->user();
+        if($userAuth->phone != $request->phone){
+            $user = User::where('phone',$request->phone)->first();
+            if($user){
+                return response()->json([
+                    'status' => 'success',
+                    'message' => 'success',
+                    'data' => $user
+                ]);
+            }
+        }
+        return response()->json([
+            'status' => 'fail','message' => 'Invalid data',
         ]);
     }
 }
