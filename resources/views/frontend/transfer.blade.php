@@ -4,8 +4,7 @@
    <div class="transfer w-100">
         <div class="card my-3">
             <div class="card-body">
-                <form action="{{ route('transfer.confirm') }}" method="POST">
-                    @csrf
+                <form action="{{ route('transfer.confirm') }}" method="GET">
                     <div class="form-group mb-3">
                             <label for="">From</label>
                             <p class="mb-1 text-muted">{{ $user->name }}</p>

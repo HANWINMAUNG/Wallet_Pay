@@ -4,7 +4,11 @@
    <div class="transfer w-100">
         <div class="card my-3">
             <div class="card-body">
-                <form action="{{ route('transfer.confirm') }}" method="">
+                <form action="{{ route('transfer.complete') }}" method="POST" id="form">
+                    @csrf
+                    <input type="hidden" name="phone" value="{{ $attributes['phone'] }}">
+                    <input type="hidden" name="amount" value="{{ $attributes['amount'] }}">
+                    <input type="hidden" name="description" value="{{ $attributes['description'] }}">
                     <div class="form-group mb-3">
                             <label for="">From</label>
                             <p class="mb-1 text-muted">{{ $user->name }}</p>
@@ -12,6 +16,7 @@
                     </div>
                     <div class="form-group mb-2">
                         <label for="">To</label>
+                        <p class="mb-0 text-muted">{{ $to_user->name }}</p>
                         <p class=" text-muted">{{ $attributes['phone'] }}</p>
                     </div>
                     <div class="form-group mb-2">
@@ -22,9 +27,47 @@
                         <label for="">Description</label>
                         <p class=" text-muted">{{ $attributes['description'] }}</p>
                     </div>
-                    <button class="btn btn-theme btn-block mt-5 form-control">Confirm</button>
+                    <button type="submit" class="btn btn-theme btn-block mt-5 form-control complete-btn">Confirm</button>
                </form>
             </div>
         </div>
    </div>         
 @endsection
+@push('script')
+ <script>
+    $(document).ready(function(){
+        $('.complete-btn').on('click' , function(e){
+            e.preventDefault();
+            Swal.fire({
+                title: 'Please fill your password!',
+                icon: 'info',
+                html:'<input type="password" class="form-control text-center password" >',
+                showCancelButton: true,
+                confirmButtonText: 'Confirm',
+                cancelButtonText: 'Cancel',
+                reverseButtons: true
+             }).then((result) => {
+                    if (result.isConfirmed) {
+                        var password = $('.password').val();
+                        $.ajax({
+                          url : '/password-check?password=' + password,
+						  type : 'GET',
+						  success : function(res){
+                             if(res.status == 'success'){
+                                $('#form').submit();
+                             }
+                             else{
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Oops...',
+                                    text: res.message,
+                                    });
+                             }
+						  }
+					}); 
+                    }
+                    });        
+        });
+    });
+ </script>
+@endpush
