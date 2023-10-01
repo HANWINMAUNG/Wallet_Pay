@@ -120,7 +120,7 @@ class PageController extends Controller
             $to_account_transaction->description = $description;
             $to_account_transaction->save();
             DB::commit();
-            return redirect('/')->with('success' ,'Successfully transfered');
+            return redirect('transaction-detail/' . $from_account_transaction->trx_no )->with('success' ,'Successfully transfered');
         } catch (\Exception $error) {
             DB::rollBack();
             return back()->withErrors(['fail' => 'Something wrong ' .$error->getMessage()])->withInput();
