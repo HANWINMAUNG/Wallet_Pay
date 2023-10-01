@@ -2,6 +2,32 @@
 @section('title','Transaction')
 @section('content')
    <div class="transaction">
+        <div class="card mb-2">
+            <div class="card-body p-2">
+                <div class="row">
+                    <div class="col-6">
+                            <!-- <div class="form-group input-group my-2">
+                                <label class="input-group-text p-1">Type</label>
+                                <select class="custom-select form-control">
+                                    <option value="">All</option>
+                                    <option value="1">Income</option>
+                                    <option value="2">Expense</option>
+                                </select>
+                            </div> -->
+                    </div>
+                    <div class="col-6">
+                            <div class=" form-group input-group my-2">
+                                <label class="input-group-text p-1">Type</label>
+                                <select class="custom-select form-control type">
+                                    <option value="">All</option>
+                                    <option value="1" @if(request()->type == 1) selected @endif>Income</option>
+                                    <option value="2" @if(request()->type == 2) selected @endif>Expense</option>
+                                </select>
+                            </div>
+                    </div>
+                </div>
+            </div>
+        </div>
         <div class="infinite-scroll">
             @foreach($transactions as $transaction)
                 <a href="{{ route('transaction-detail',$transaction->trx_no) }}">
@@ -47,6 +73,11 @@
                 $('ul.pagination').remove();
             }
         });
+        $('.type').change(function(){
+            var type = $('.type').val();
+            history.pushState(null,'',`?type=${type}`);
+            window.location.reload();
+        })
     });
 </script>
 @endpush

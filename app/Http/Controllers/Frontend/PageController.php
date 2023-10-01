@@ -164,10 +164,15 @@ class PageController extends Controller
             'message' => 'The password is incorrect!',
         ]);
     }
-    public function transaction()
+    public function transaction(Request $request)
     {
         $userAuth = auth()->guard('web')->user();
-        $transactions = Transaction::with('User','Source')->orderBy('created_at' , 'DESC')->where('user_id',$userAuth->id)->paginate(5);
+        $transactions = Transaction::with('User','Source')->orderBy('created_at' , 'DESC')->where('user_id',$userAuth->id);
+
+        if($request->type){
+            $transactions = $transactions->where('type', $request->type);
+        }
+        $transactions = $transactions->paginate(5);
         return view('frontend.transaction' , ['transactions' => $transactions ]);
     }
     public function transactionDetail($trx_no)
