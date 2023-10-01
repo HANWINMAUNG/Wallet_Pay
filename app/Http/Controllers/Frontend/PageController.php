@@ -172,6 +172,9 @@ class PageController extends Controller
         if($request->type){
             $transactions = $transactions->where('type', $request->type);
         }
+        if($request->date){
+            $transactions = $transactions->whereDate('created_at', $request->date);
+        }
         $transactions = $transactions->paginate(5);
         return view('frontend.transaction' , ['transactions' => $transactions ]);
     }
