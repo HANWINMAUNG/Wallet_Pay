@@ -17,12 +17,14 @@ class CreateTransactionsTable extends Migration
             $table->id();
             $table->string('ref_no');
             $table->string('trx_no');
-            $table->bigInteger('user_id');
+            $table->foreignId('user_id');
             $table->tinyInteger('type')->comment('1 => income , 2 => expense');
             $table->decimal('amount',20,2);
-            $table->bigInteger('source_id');
+            $table->foreignId('source_id');
             $table->text('description')->nullabel();
             $table->timestamps();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->foreign('source_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

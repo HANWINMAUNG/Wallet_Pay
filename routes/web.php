@@ -33,6 +33,8 @@ Route::middleware('auth')->group(function(){
     Route::get('transfer',[PageController::class, 'transfer'])->name('transfer');
     Route::get('transfer/confirm',[PageController::class, 'transferConfirm'])->name('transfer.confirm');
     Route::post('transfer/complete',[PageController::class, 'transferComplete'])->name('transfer.complete');
+    Route::get('transaction',[PageController::class, 'transaction'])->name('transaction');
+    Route::get('transaction-detail/{trx_no}',[PageController::class, 'transactionDetail'])->name('transaction-detail');
     //ajax route
     Route::get('to-account-verify',[PageController::class, 'toAccountVerify'])->name('to-account-verify');
     Route::get('password-check',[PageController::class, 'passwordCheck'])->name('password-check');
