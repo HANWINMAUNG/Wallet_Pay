@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Helpers\UUIDGenerate;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
@@ -82,17 +85,47 @@ class PageController extends Controller
         }
         $attributes = $request->validated();
         $amount = $attributes['amount'];
+        $description = $attributes['description'];
         if(!$userAuth->Wallet || !$to_user->Wallet){
             return back()->withErrors(['fail' => 'Something wrong .The given data is invalid'])->withInput();
         }
-        $form_account_wallet = $userAuth->Wallet;
-        $form_account_wallet->decrement('amount', $amount);
-        $form_account_wallet->update();
+        DB::beginTransaction();
+        try {
+            $from_account_wallet = $userAuth->Wallet;
+            $from_account_wallet->decrement('amount', $amount);
+            $from_account_wallet->update();
 
-        $to_account_wallet = $to_user->Wallet;
-        $to_account_wallet->increment('amount', $amount);
-        $to_account_wallet->update();
-        return redirect('/')->with('success' ,'Successfully transfered');
+            $to_account_wallet = $to_user->Wallet;
+            $to_account_wallet->increment('amount', $amount);
+            $to_account_wallet->update();
+
+            $ref_no = UUIDGenerate::refNumber();
+            $from_account_transaction = new Transaction();
+            $from_account_transaction->ref_no = $ref_no;
+            $from_account_transaction->trx_no = UUIDGenerate::trxNumber();
+            $from_account_transaction->user_id = $userAuth->id;
+            $from_account_transaction->type = 2;
+            $from_account_transaction->amount = $amount;
+            $from_account_transaction->source_id = $to_user->id;
+            $from_account_transaction->description = $description;
+            $from_account_transaction->save();
+
+            $to_account_transaction = new Transaction();
+            $to_account_transaction->ref_no = $ref_no;
+            $to_account_transaction->trx_no = UUIDGenerate::trxNumber();
+            $to_account_transaction->user_id = $to_user->id;
+            $to_account_transaction->type = 1;
+            $to_account_transaction->amount = $amount;
+            $to_account_transaction->source_id = $userAuth->id;
+            $to_account_transaction->description = $description;
+            $to_account_transaction->save();
+            DB::commit();
+            return redirect('/')->with('success' ,'Successfully transfered');
+        } catch (\Exception $error) {
+            DB::rollBack();
+            return back()->withErrors(['fail' => 'Something wrong ' .$error->getMessage()])->withInput();
+        }
+        
     }
     public function toAccountVerify(Request $request)
     {
