@@ -51,6 +51,7 @@ class PageController extends Controller
     }
     public function transferConfirm(TransferRequest $request)
     {
+        dd($request->all());
         $to_user = User::where('phone' , $request->phone)->first();
         if(!$to_user){
             return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
@@ -162,6 +163,15 @@ class PageController extends Controller
         return response()->json([
             'status' => 'fail',
             'message' => 'The password is incorrect!',
+        ]);
+    }
+    public function transferHash(Request $request)
+    {
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value = hash_hmac('sha256',$str,'walletpay123!@#');
+        return response()->json([
+            'status' => 'success',
+            'data' => $hash_value,
         ]);
     }
     public function transaction(Request $request)

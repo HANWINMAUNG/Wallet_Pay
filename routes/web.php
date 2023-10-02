@@ -38,4 +38,5 @@ Route::middleware('auth')->group(function(){
     //ajax route
     Route::get('to-account-verify',[PageController::class, 'toAccountVerify'])->name('to-account-verify');
     Route::get('password-check',[PageController::class, 'passwordCheck'])->name('password-check');
+    Route::get('/transfer-hash',[PageController::class, 'transferHash'])->name('transfer-hash');
 });
