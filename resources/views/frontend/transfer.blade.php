@@ -4,8 +4,9 @@
    <div class="transfer w-100">
         <div class="card my-3">
             <div class="card-body">
+            @include('frontend.layouts.page_info')
                 <form action="{{ route('transfer.confirm') }}" method="GET" id="transfer-form">
-                    <input type="hidden" class="hash_value" name="hash_value" value="">
+                    <input type="hidden" class="hash-value"  name="hash_value" value="">
                     <div class="form-group mb-3">
                             <label for="">From</label>
                             <p class="mb-1 text-muted">{{ $user->name }}</p>
@@ -46,23 +47,23 @@
  <script>
     $(document).ready(function(){
         $('.verify-btn').on('click' , function(){
-              var phone = $('.to_phone').val();
-              $.ajax({
-                          url : 'to-account-verify?phone=' + phone,
-						  type : 'GET',
-						  success : function(res){
-                            // console.log(res)
-                             if(res.status == 'success'){
-                                $('.to_account_info').text('('+res.data['name']+')');
-                             }
-                             else{
-                                $('.to_account_info').text('('+res.message+')');
-                             }
-						  }
-					});
+                var phone = $('.to_phone').val();
+                $.ajax({
+                            url : 'to-account-verify?phone=' + phone,
+                            type : 'GET',
+                            success : function(res){
+                                // console.log(res)
+                                if(res.status == 'success'){
+                                    $('.to_account_info').text('('+res.data['name']+')');
+                                }
+                                else{
+                                    $('.to_account_info').text('('+res.message+')');
+                                }
+                            }
+                });
         });
-              $('.submit-btn').on('click', functiond(e){
-                e.preventDefault();
+        $('.submit-btn').on('click', function(e){
+            e.preventDefault();
                 var phone = $('.phone').val();
                 var amount = $('.amount').val();
                 var description = $('.description').val();
@@ -70,14 +71,13 @@
                           url : `/transfer-hash?phone=${phone}&amount=${amount}&description=${description}`,
 						  type : 'GET',
 						  success : function(res){
-                            // console.log(res)
                              if(res.status == 'success'){
-                                $('.hash_value').val(res.data);
+                                $('.hash-value').val(res.data);
                                 $('#transfer-form').submit();
                              }
 						  }
-					});
-              });
+				});
+        });
     });
  </script>
 @endpush

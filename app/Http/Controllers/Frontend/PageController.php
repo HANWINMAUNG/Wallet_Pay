@@ -51,38 +51,58 @@ class PageController extends Controller
     }
     public function transferConfirm(TransferRequest $request)
     {
-        dd($request->all());
+        $hash_value = $request->hash_value;
+        $userAuth = auth()->guard('web')->user();
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value2 = hash_hmac('sha256',$str,'walletpay123!@#');
+        if($hash_value !== $hash_value2){
+            return back()->withErrors(['fail' => 'The given data is invalid'])->withInput();
+        }
         $to_user = User::where('phone' , $request->phone)->first();
         if(!$to_user){
             return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
         }
-        $userAuth = auth()->guard('web')->user();
         if($userAuth->phone == $request->phone){
             return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
         }
         if($request->amount < 1000){
             return back()->withErrors(['amount' => 'The amount must be minimum 1000 MMK'])->withInput();
         }
+        if(!$userAuth->Wallet || !$to_user->Wallet){
+            return back()->withErrors(['fail' => 'Something wrong .The given data is invalid'])->withInput();
+        }
+        if($userAuth->Wallet->amount < $request->amount){
+            return back()->withErrors(['amount' => 'The amount is not enough'])->withInput();
+        }
         $attributes = $request->validated();
-        $user = auth()->guard('web')->user();
         return view('frontend.transfer_confirm',[
-            'user' => $user,
+            'userAuth' => $userAuth,
             'to_user' => $to_user,
-            'attributes' => $attributes
+            'attributes' => $attributes,
+            'hash_value' => $hash_value
         ]);
     }
     public function transferComplete(TransferRequest $request)
     {
+        $userAuth = auth()->guard('web')->user();
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value2 = hash_hmac('sha256',$str,'walletpay123!@#');
+        if($request->hash_value !== $hash_value2){
+            return back()->withErrors(['fail' => 'The given data is invalid'])->withInput();
+        }
         $to_user = User::where('phone' , $request->phone)->first();
         if(!$to_user){
-            return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
+            return back()->withErrors(['fail' => 'The account is invalid'])->withInput();
         }
-        $userAuth = auth()->guard('web')->user();
+        
         if($userAuth->phone == $request->phone){
-            return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
+            return back()->withErrors(['fail' => 'The account is invalid'])->withInput();
         }
         if($request->amount < 1000){
-            return back()->withErrors(['amount' => 'The amount must be minimum 1000 MMK'])->withInput();
+            return back()->withErrors(['fial' => 'The amount must be minimum 1000 MMK'])->withInput();
+        }
+        if($userAuth->Wallet->amount < $request->amount){
+            return back()->withErrors(['fail' => 'The amount is not enough'])->withInput();
         }
         $attributes = $request->validated();
         $amount = $attributes['amount'];

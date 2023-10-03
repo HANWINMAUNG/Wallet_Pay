@@ -4,16 +4,18 @@
    <div class="transfer w-100">
         <div class="card my-3">
             <div class="card-body">
+                @include('frontend.layouts.page_info')
                 <form action="{{ route('transfer.complete') }}" method="POST" id="form">
                     @csrf
+                    <input type="hidden" name="hash_value" value="{{ $hash_value }}">
                     <input type="hidden" name="phone" value="{{ $attributes['phone'] }}">
                     <input type="hidden" name="amount" value="{{ $attributes['amount'] }}">
                     <input type="hidden" name="description" value="{{ $attributes['description'] }}">
                     <div class="form-group mb-3">
                             <label for="">From</label>
-                            <p class="mb-1 text-muted">{{ $user->name }}</p>
-                            <p class="mb-1 text-muted">{{ $user->phone }}</p>
-                    </div>
+                            <p class="mb-1 text-muted">{{ $userAuth->name }}</p>
+                            <p class="mb-1 text-muted">{{ $userAuth->phone }}</p>
+                    </div> 
                     <div class="form-group mb-2">
                         <label for="">To</label>
                         <p class="mb-0 text-muted">{{ $to_user->name }}</p>

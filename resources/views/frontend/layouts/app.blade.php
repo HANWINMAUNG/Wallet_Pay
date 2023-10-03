@@ -64,7 +64,6 @@
     <script src="{{ asset('frontend/js/bootstrap.min.js') }}"></script>
     <script src="{{ asset('frontend/js/jquery.min.js') }}"></script>
     <script src="{{ asset('frontend/js/sweetalert2.min.js') }}"></script>
-    @stack('script')
     <script>
         $(document).ready(function(){
             let token = document.head.querySelector('meta[name="csrf-token"]');
@@ -101,7 +100,7 @@
                 })
                 @endif
 		});
-        
     </script>
+    @stack('script') 
 </body>
 </html>
