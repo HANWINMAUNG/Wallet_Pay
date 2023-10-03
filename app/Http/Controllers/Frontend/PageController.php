@@ -214,4 +214,9 @@ class PageController extends Controller
         $transaction = Transaction::with('User','Source')->where('user_id' , $userAuth->id)->where('trx_no',$trx_no)->first();
         return view('frontend.transaction_detail' , ['transaction' => $transaction ]);
     }
+    public function receiveQr()
+    {
+        $userAuth = auth()->guard('web')->user();
+        return view('frontend.receive_qr', ['userAuth' => $userAuth ]);
+    }
 }
