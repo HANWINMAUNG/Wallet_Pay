@@ -219,4 +219,8 @@ class PageController extends Controller
         $userAuth = auth()->guard('web')->user();
         return view('frontend.receive_qr', ['userAuth' => $userAuth ]);
     }
+    public function scanAndPay()
+    {
+       return  view('frontend.scan_and_pay');
+    }
 }

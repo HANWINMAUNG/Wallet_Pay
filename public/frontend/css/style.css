@@ -209,3 +209,8 @@ a:hover{
 .home .function-box svg{
    margin-right: 8px;
 }
+/*------scan and pay-----*/
+.scan-and-pay img{
+   width: 50%;
+  height: auto;
+}
