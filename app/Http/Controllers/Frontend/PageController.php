@@ -148,6 +148,20 @@ class PageController extends Controller
             $to_account_transaction->source_id = $userAuth->id;
             $to_account_transaction->description = $description;
             $to_account_transaction->save();
+            //from noti
+            $title = 'E-money transfered';
+            $message = 'Your e-money transfered'.number_format($amount).'MMK to'.$to_user->name.' ('.$to_user->phone.').';
+            $sourceable_id = $from_account_transaction->id;
+            $sourceable_type = Transaction::class;
+            $web_link = route('transaction-detail' , $from_account_transaction->trx_no );
+            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            //to noti
+            $title = 'E-money received';
+            $message = 'Your e-money received'.number_format($amount).'MMK from'.$userAuth->name.' ('.$userAuth->phone.').';
+            $sourceable_id = $to_account_transaction->id;
+            $sourceable_type = Transaction::class;
+            $web_link = route('transaction-detail' , $to_account_transaction->trx_no );
+            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
             DB::commit();
             return redirect('transaction-detail/' . $from_account_transaction->trx_no )->with('success' ,'Successfully transfered');
         } catch (\Exception $error) {
@@ -334,6 +348,21 @@ class PageController extends Controller
             $to_account_transaction->source_id = $userAuth->id;
             $to_account_transaction->description = $description;
             $to_account_transaction->save();
+
+            //from noti
+            $title = 'E-money transfered';
+            $message = 'Your e-money transfered'.number_format($amount).'MMK to'.$to_user->name.' ('.$to_user->phone.').';
+            $sourceable_id = $from_account_transaction->id;
+            $sourceable_type = Transaction::class;
+            $web_link = route('transaction-detail' , $from_account_transaction->trx_no );
+            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            //to noti
+            $title = 'E-money received';
+            $message = 'Your e-money received'.number_format($amount).'MMK from'.$userAuth->name.' ('.$userAuth->phone.').';
+            $sourceable_id = $to_account_transaction->id;
+            $sourceable_type = Transaction::class;
+            $web_link = route('transaction-detail' , $to_account_transaction->trx_no );
+            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
             DB::commit();
             return redirect('transaction-detail/' . $from_account_transaction->trx_no )->with('success' ,'Successfully transfered');
         } catch (\Exception $error) {
