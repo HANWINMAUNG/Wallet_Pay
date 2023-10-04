@@ -4,6 +4,7 @@
    <div class="scan-and-pay">
         <div class="card">
             <div class="card-body text-center">
+            @include('frontend.layouts.page_info')
                 <div class="text-center">
                     <img src="{{ asset('frontend/images/scan.png') }}" alt="">
                 </div>

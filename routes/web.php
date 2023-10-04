@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Auth\AdminLoginController;
+use App\Http\Controllers\Frontend\NotificationController;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,6 +41,10 @@ Route::middleware('auth')->group(function(){
     Route::get('scan-and-pay-form',[PageController::class, 'scanAndPayForm'])->name('scan-and-pay-form');
     Route::get('scan-and-pay-confirm',[PageController::class, 'scanAndPayConfirm'])->name('scan-and-pay-confirm');
     Route::post('scan-and-pay-complete',[PageController::class, 'scanAndPayComplete'])->name('scan-and-pay-complete');
+
+    //notification 
+    Route::get('notification',[NotificationController::class, 'index'])->name('notification');
+    Route::post('notification/{id}',[NotificationController::class, 'show'])->name('notification-show');
     //ajax route
     Route::get('to-account-verify',[PageController::class, 'toAccountVerify'])->name('to-account-verify');
     Route::get('password-check',[PageController::class, 'passwordCheck'])->name('password-check');

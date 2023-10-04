@@ -6,14 +6,14 @@
         <div class="col-md-6">
             <div class="card p-4 auth-form">
                <h3 class="text-center">Login</h3>
-               <p class="text-center text-info">Please fill to login form</p>
+               <p class="text-center" style="color:#5842E3;">Please fill to login form</p>
                 <div class="card-body">
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
                         <div class="from-group mb-3">
-                            <label for="">Email</label>
-                            <input type="email" name="email" id="" class="form-control @error('email') is-invalid @enderror"  value="{{ old('email') }}">
-                            @error('email')
+                            <label for="">Phone</label>
+                            <input type="text" name="phone" id="" class="form-control @error('phone') is-invalid @enderror"  value="{{ old('phone') }}">
+                            @error('phone')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>

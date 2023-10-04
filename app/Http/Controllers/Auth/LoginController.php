@@ -44,6 +44,10 @@ class LoginController extends Controller
     {
         return Auth::guard();
     }
+    public function username()
+    {
+        return 'phone';
+    }
     public function showLoginForm()
     {
         return view('auth.login');
