@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('title','Transaction Detail')
 @section('content')
-   <div class="transaction-detail">
+   <div class="transaction-detail" style="margin-top:20px;">
                 <div class="card">
                     <div class="card-body">
                        <div class="text-center mb-3">

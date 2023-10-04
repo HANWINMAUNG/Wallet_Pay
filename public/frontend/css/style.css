@@ -214,3 +214,13 @@ a:hover{
    width: 50%;
   height: auto;
 }
+/*------notification detail------*/
+.notification-detail img{
+   width: 50%;
+  height: auto;
+}
+.unread-noti-count{
+   position: absolute;
+   right:0px;
+   padding:3px;
+}

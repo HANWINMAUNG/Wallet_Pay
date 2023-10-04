@@ -44,7 +44,7 @@ Route::middleware('auth')->group(function(){
 
     //notification 
     Route::get('notification',[NotificationController::class, 'index'])->name('notification');
-    Route::post('notification/{id}',[NotificationController::class, 'show'])->name('notification-show');
+    Route::get('notification/{id}',[NotificationController::class, 'show'])->name('notification-show');
     //ajax route
     Route::get('to-account-verify',[PageController::class, 'toAccountVerify'])->name('to-account-verify');
     Route::get('password-check',[PageController::class, 'passwordCheck'])->name('password-check');

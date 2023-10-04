@@ -1,7 +1,7 @@
 @extends('frontend.layouts.app')
 @section('title','Wallet Pay')
 @section('content')
-   <div class="home">
+   <div class="home" style="margin-top:40px;">
        <div class="row">
          <div class="col-12">
             <div class="profile">

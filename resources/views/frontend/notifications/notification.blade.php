@@ -9,7 +9,7 @@
                                 <div class="card-body p-2">
                                    <h6>{{ Illuminate\Support\Str::limit($notification->data['title'],40,'...') }}</h6>
                                    <p class="mb-1">{{ Illuminate\Support\Str::limit($notification->data['message'],100,'...') }}</p>
-                                   <p class="text-muted mb-1">{{ Carbon\Carbon::parse($notification->created_at)->format('Y-m-d h:i:s A')}}</p>
+                                   <p class=" @if(is_null($notification->read_at)) text-danger @else text-muted @endif  mb-1">{{ Carbon\Carbon::parse($notification->created_at)->format('Y-m-d h:i:s A')}}</p>
                                 </div>
                             </div>
                         </a>
