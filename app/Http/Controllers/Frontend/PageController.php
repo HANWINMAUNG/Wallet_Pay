@@ -223,4 +223,115 @@ class PageController extends Controller
     {
        return  view('frontend.scan_and_pay');
     }
+    public function scanAndPayForm(Request $request)
+    {
+        $form_account = auth()->guard('web')->user();
+        $to_account = User::where('phone', $request->phone)->first();
+        if(!$to_account){
+            return back()->withErrors(['fail' => 'The QR code is invalid'])->withInput(); 
+        }
+       return  view('frontend.scan_and_pay_form',[
+        'to_account' => $to_account,
+        'form_account' => $form_account
+       ]);
+    }
+    public function scanAndPayConfirm(TransferRequest $request)
+    {
+        $hash_value = $request->hash_value;
+        $userAuth = auth()->guard('web')->user();
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value2 = hash_hmac('sha256',$str,'walletpay123!@#');
+        if($hash_value !== $hash_value2){
+            return back()->withErrors(['fail' => 'The given data is invalid'])->withInput();
+        }
+        $to_user = User::where('phone' , $request->phone)->first();
+        if(!$to_user){
+            return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
+        }
+        if($userAuth->phone == $request->phone){
+            return back()->withErrors(['phone' => 'The account is invalid'])->withInput();
+        }
+        if($request->amount < 1000){
+            return back()->withErrors(['amount' => 'The amount must be minimum 1000 MMK'])->withInput();
+        }
+        if(!$userAuth->Wallet || !$to_user->Wallet){
+            return back()->withErrors(['fail' => 'Something wrong .The given data is invalid'])->withInput();
+        }
+        if($userAuth->Wallet->amount < $request->amount){
+            return back()->withErrors(['amount' => 'The amount is not enough'])->withInput();
+        }
+        $attributes = $request->validated();
+        return view('frontend.scan_and_pay_confirm',[
+            'userAuth' => $userAuth,
+            'to_user' => $to_user,
+            'attributes' => $attributes,
+            'hash_value' => $hash_value
+        ]);
+    }
+    public function scanAndPayComplete(TransferRequest $request)
+    {
+        $userAuth = auth()->guard('web')->user();
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value2 = hash_hmac('sha256',$str,'walletpay123!@#');
+        if($request->hash_value !== $hash_value2){
+            return back()->withErrors(['fail' => 'The given data is invalid'])->withInput();
+        }
+        $to_user = User::where('phone' , $request->phone)->first();
+        if(!$to_user){
+            return back()->withErrors(['fail' => 'The account is invalid'])->withInput();
+        }
+        
+        if($userAuth->phone == $request->phone){
+            return back()->withErrors(['fail' => 'The account is invalid'])->withInput();
+        }
+        if($request->amount < 1000){
+            return back()->withErrors(['fial' => 'The amount must be minimum 1000 MMK'])->withInput();
+        }
+        if($userAuth->Wallet->amount < $request->amount){
+            return back()->withErrors(['fail' => 'The amount is not enough'])->withInput();
+        }
+        $attributes = $request->validated();
+        $amount = $attributes['amount'];
+        $description = $attributes['description'];
+        if(!$userAuth->Wallet || !$to_user->Wallet){
+            return back()->withErrors(['fail' => 'Something wrong .The given data is invalid'])->withInput();
+        }
+        DB::beginTransaction();
+        try {
+            $from_account_wallet = $userAuth->Wallet;
+            $from_account_wallet->decrement('amount', $amount);
+            $from_account_wallet->update();
+
+            $to_account_wallet = $to_user->Wallet;
+            $to_account_wallet->increment('amount', $amount);
+            $to_account_wallet->update();
+
+            $ref_no = UUIDGenerate::refNumber();
+            $from_account_transaction = new Transaction();
+            $from_account_transaction->ref_no = $ref_no;
+            $from_account_transaction->trx_no = UUIDGenerate::trxNumber();
+            $from_account_transaction->user_id = $userAuth->id;
+            $from_account_transaction->type = 2;
+            $from_account_transaction->amount = $amount;
+            $from_account_transaction->source_id = $to_user->id;
+            $from_account_transaction->description = $description;
+            $from_account_transaction->save();
+
+            $to_account_transaction = new Transaction();
+            $to_account_transaction->ref_no = $ref_no;
+            $to_account_transaction->trx_no = UUIDGenerate::trxNumber();
+            $to_account_transaction->user_id = $to_user->id;
+            $to_account_transaction->type = 1;
+            $to_account_transaction->amount = $amount;
+            $to_account_transaction->source_id = $userAuth->id;
+            $to_account_transaction->description = $description;
+            $to_account_transaction->save();
+            DB::commit();
+            return redirect('transaction-detail/' . $from_account_transaction->trx_no )->with('success' ,'Successfully transfered');
+        } catch (\Exception $error) {
+            DB::rollBack();
+            return back()->withErrors(['fail' => 'Something wrong ' .$error->getMessage()])->withInput();
+        }
+        
+    }
 }

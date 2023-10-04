@@ -44,7 +44,9 @@
         const qrScanner = new QrScanner(videoElem,function(result){ 
             if(result){
                 qrScanner.stop();
-                $('#scanModal').modal('hide').reload();
+                $('#scanModal').modal('hide');
+                var phone = result;
+                window.location.replace(`scan-and-pay-form?phone=${phone}`);
             }
             console.log(result);
         });

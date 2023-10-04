@@ -37,6 +37,9 @@ Route::middleware('auth')->group(function(){
     Route::get('transaction-detail/{trx_no}',[PageController::class, 'transactionDetail'])->name('transaction-detail');
     Route::get('receive-qr',[PageController::class, 'receiveQr'])->name('receive-qr');
     Route::get('scan-and-pay',[PageController::class, 'scanAndPay'])->name('scan-and-pay');
+    Route::get('scan-and-pay-form',[PageController::class, 'scanAndPayForm'])->name('scan-and-pay-form');
+    Route::get('scan-and-pay-confirm',[PageController::class, 'scanAndPayConfirm'])->name('scan-and-pay-confirm');
+    Route::post('scan-and-pay-complete',[PageController::class, 'scanAndPayComplete'])->name('scan-and-pay-complete');
     //ajax route
     Route::get('to-account-verify',[PageController::class, 'toAccountVerify'])->name('to-account-verify');
     Route::get('password-check',[PageController::class, 'passwordCheck'])->name('password-check');
