@@ -16,7 +16,8 @@
         "proengsoft/laravel-jsvalidation": "^4.7",
         "simplesoftwareio/simple-qrcode": "~2",
         "vinkla/hashids": "^9.1",
-        "yajra/laravel-datatables-oracle": "^9.21"
+        "yajra/laravel-datatables-oracle": "^9.21",
+        "laravel/passport": "^10.4"
     },
     "require-dev": {
         "facade/ignition": "^2.5",
@@ -33,7 +34,8 @@
             "Database\\Seeders\\": "database/seeders/"
         },
         "files": [
-            "App/Helpers/EncryptDecrypt.php"
+            "App/Helpers/EncryptDecrypt.php",
+            "App/Helpers/ResponseJson.php"
         ]
 
     },

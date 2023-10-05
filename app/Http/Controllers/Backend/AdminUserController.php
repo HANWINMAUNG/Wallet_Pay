@@ -39,7 +39,7 @@ class AdminUserController extends Controller
                                 $device = $agent->device();
                                 $platform = $agent->platform();
                                 $browser = $agent->browser();
-                                return view('backend.user_agent_column.user_agent' , [
+                                return view('backend.column.user_agent' , [
                                     'device' => $device,
                                     'platform' => $platform,
                                     'browser' => $browser
