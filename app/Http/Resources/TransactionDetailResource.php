@@ -5,7 +5,7 @@ namespace App\Http\Resources;
 use Carbon\Carbon;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class TransactionResource extends JsonResource
+class TransactionDetailResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -15,18 +15,14 @@ class TransactionResource extends JsonResource
      */
     public function toArray($request)
     {
-        $title = '';
-        if($this->type == 1){
-            $title = 'From'.($this->Source ?$this->Source->name : '');
-        }else if($this->type == 2){
-            $title = 'To'.($this->Source ?$this->Source->name : '');
-        }
         return [
             'trx_no' => $this->trx_no,
+            'ref_no' => $this->ref_no,
             'amount' => number_format($this->amount,2) .' MMK',
             'type' => $this->type,
-            'title' => $title,
-            'date' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'source' => $this->Source ?$this->Source->name : '',
+            'date_time' => Carbon::parse($this->created_at)->format('Y-m-d H:i:s'),
+            'description' =>$this->description,
         ];
     }
 }

@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ProfileResource;
 use App\Http\Resources\TransactionResource;
+use App\Http\Resources\TransactionDetailResource;
 
 class PageController extends Controller
 {
@@ -29,5 +30,12 @@ class PageController extends Controller
         $transactions = $transactions->paginate(5);
         $data = TransactionResource::collection($transactions)->additional(['result' => 1,'message' => 'Success']);
         return $data;
+    }
+    public function  transactionDetail($trx_no)
+    {
+        $userAuth = auth()->user();
+        $transaction = Transaction::with('User','Source')->where('user_id' , $userAuth->id)->where('trx_no',$trx_no)->firstOrFail();
+        $data = new TransactionDetailResource($transaction);
+        return success('Success',$data);
     }
 }
