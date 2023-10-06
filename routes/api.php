@@ -29,4 +29,7 @@ use App\Http\Controllers\Api\RegisterController;
     Route::get('/notification',[PageController::class, 'notification']);
     Route::get('/notification/{id}',[PageController::class, 'notificationDetail']);
 
+    Route::get('/to-account-verify',[PageController::class, 'toAccountVerify']);
+    Route::get('/transfer-confirm',[PageController::class, 'transferConfirm']);
+
  });
