@@ -42,7 +42,11 @@ class PageController extends Controller
             $sourceable_id = $user->id;
             $sourceable_type = User::class;
             $web_link = route('profile');
-            Notification::send([$user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            $deep_link = [
+                'target' => 'profile',
+                'parameter' =>null
+            ];
+            Notification::send([$user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
             return redirect()->route('profile')->with('success' , 'Successfully Updated Password');
         }
         return back()->withErrors(['old_password' => 'Old password is incorrect'])->withInput();
@@ -154,14 +158,26 @@ class PageController extends Controller
             $sourceable_id = $from_account_transaction->id;
             $sourceable_type = Transaction::class;
             $web_link = route('transaction-detail' , $from_account_transaction->trx_no );
-            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            $deep_link = [
+                'target' => 'transaction-detail',
+                'parameter' =>[
+                    'trx_no' => $from_account_transaction->trx_no
+                ]
+            ];
+            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
             //to noti
             $title = 'E-money received';
             $message = 'Your e-money received'.number_format($amount).'MMK from'.$userAuth->name.' ('.$userAuth->phone.').';
             $sourceable_id = $to_account_transaction->id;
             $sourceable_type = Transaction::class;
             $web_link = route('transaction-detail' , $to_account_transaction->trx_no );
-            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            $deep_link = [
+                'target' => 'transaction-detail',
+                'parameter' =>[
+                    'trx_no' => $to_account_transaction->trx_no
+                ]
+            ];
+            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
             DB::commit();
             return redirect('transaction-detail/' . $from_account_transaction->trx_no )->with('success' ,'Successfully transfered');
         } catch (\Exception $error) {
@@ -355,14 +371,26 @@ class PageController extends Controller
             $sourceable_id = $from_account_transaction->id;
             $sourceable_type = Transaction::class;
             $web_link = route('transaction-detail' , $from_account_transaction->trx_no );
-            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            $deep_link = [
+                'target' => 'transaction-detail',
+                'parameter' =>[
+                    'trx_no' => $from_account_transaction->trx_no
+                ]
+            ];
+            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
             //to noti
             $title = 'E-money received';
             $message = 'Your e-money received'.number_format($amount).'MMK from'.$userAuth->name.' ('.$userAuth->phone.').';
             $sourceable_id = $to_account_transaction->id;
             $sourceable_type = Transaction::class;
             $web_link = route('transaction-detail' , $to_account_transaction->trx_no );
-            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link));
+            $deep_link = [
+                'target' => 'transaction-detail',
+                'parameter' =>[
+                    'trx_no' => $to_account_transaction->trx_no
+                ]
+            ];
+            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
             DB::commit();
             return redirect('transaction-detail/' . $from_account_transaction->trx_no )->with('success' ,'Successfully transfered');
         } catch (\Exception $error) {

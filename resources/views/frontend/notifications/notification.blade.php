@@ -2,6 +2,7 @@
 @section('title','Notification')
 @section('content')
            <div class="notification">
+           @if($notifications->count()>0)
                 <div class="infinite-scroll">
                     @foreach($notifications as $notification)
                         <a href="{{ route('notification-show',$notification->id) }}">
@@ -16,6 +17,11 @@
                     @endforeach
                     {{$notifications->links()}}
                 </div>
+           @else
+               <p class=" text-center text-danger font-weight-bold">
+                     No record found!
+               </p> 
+           @endif
            </div>
 @endsection
 @push('script')

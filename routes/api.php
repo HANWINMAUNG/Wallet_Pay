@@ -26,4 +26,7 @@ use App\Http\Controllers\Api\RegisterController;
     Route::get('/transaction',[PageController::class, 'transaction']);
     Route::get('/transaction/{trx_no}',[PageController::class, 'transactionDetail']);
 
+    Route::get('/notification',[PageController::class, 'notification']);
+    Route::get('/notification/{id}',[PageController::class, 'notificationDetail']);
+
  });

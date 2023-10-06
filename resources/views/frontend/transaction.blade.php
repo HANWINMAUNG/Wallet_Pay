@@ -29,34 +29,40 @@
             </div>
         </div>
         <h6>Transactions</h6>
-        <div class="infinite-scroll">
-            @foreach($transactions as $transaction)
-                <a href="{{ route('transaction-detail',$transaction->trx_no) }}">
-                    <div class="card mb-2">
-                        <div class="card-body p-2">
-                            <div class="d-flex justify-content-between">
-                                <h6 class="mb-1">TRX ID : {{ $transaction->trx_no }}</h6>
-                                @if($transaction->type == 1)
-                                <p class="mb-1 text-success">+{{ $transaction->amount }} <small>MMK</small></p>
-                                @elseif($transaction->type == 2)
-                                <p class="mb-1 text-danger">-{{ $transaction->amount }} <small>MMK</small></p>
-                                @endif
+        @if($transactions->count()>0)
+            <div class="infinite-scroll">
+                @foreach($transactions as $transaction)
+                    <a href="{{ route('transaction-detail',$transaction->trx_no) }}">
+                        <div class="card mb-2">
+                            <div class="card-body p-2">
+                                <div class="d-flex justify-content-between">
+                                    <h6 class="mb-1">TRX ID : {{ $transaction->trx_no }}</h6>
+                                    @if($transaction->type == 1)
+                                    <p class="mb-1 text-success">+{{ $transaction->amount }} <small>MMK</small></p>
+                                    @elseif($transaction->type == 2)
+                                    <p class="mb-1 text-danger">-{{ $transaction->amount }} <small>MMK</small></p>
+                                    @endif
+                                </div>
+                                <p class="mb-1 text-muted">
+                                    @if($transaction->type == 1)
+                                    <span class="text-success">From</span>
+                                    @elseif($transaction->type == 2)
+                                    <span class="text-danger">To</span>
+                                    @endif 
+                                    -{{ $transaction->Source ? $transaction->Source->name : '' }}
+                                </p>
+                                <p class="mb-1 text-muted">{{ $transaction->created_at }}</p>
                             </div>
-                            <p class="mb-1 text-muted">
-                                @if($transaction->type == 1)
-                                <span class="text-success">From</span>
-                                @elseif($transaction->type == 2)
-                                <span class="text-danger">To</span>
-                                @endif 
-                                -{{ $transaction->Source ? $transaction->Source->name : '' }}
-                            </p>
-                            <p class="mb-1 text-muted">{{ $transaction->created_at }}</p>
                         </div>
-                    </div>
-                </a>
-            @endforeach
-            {{$transactions->links()}}
-        </div>
+                    </a>
+                @endforeach
+                {{$transactions->links()}}
+            </div>
+        @else
+               <p class=" text-center text-danger font-weight-bold">
+                     No record found!
+               </p> 
+        @endif
    </div>         
 @endsection
 @push('script')
