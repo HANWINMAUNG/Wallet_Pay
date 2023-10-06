@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Models\Wallet;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
 use App\Helpers\UUIDGenerate;
 use App\Http\Controllers\Controller;
@@ -40,4 +41,5 @@ class LoginController extends Controller
         $user->token()->revoke();
         return success('Successfully logout',null);
     }
+   
 }

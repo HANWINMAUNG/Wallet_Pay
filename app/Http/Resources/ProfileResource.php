@@ -20,6 +20,7 @@ class ProfileResource extends JsonResource
             'email' => $this->email,
             'account_number' => $this->Wallet ? $this->Wallet->account_number :'',
             'amount' => $this->Wallet ? number_format($this->Wallet->amount) :0,
+            'hash_value' => $this->phone,
         ];
     }
 }

@@ -23,4 +23,7 @@ use App\Http\Controllers\Api\RegisterController;
     Route::get('/profile',[PageController::class, 'profile']);
     Route::post('/logout',[LoginController::class, 'logout']);
 
+    Route::get('/transaction',[PageController::class, 'transaction']);
+    Route::get('/transaction/{trx_no}',[PageController::class, 'transactionDetail']);
+
  });
