@@ -2,13 +2,16 @@
 
 namespace App\Http\Controllers\Api;
 
-use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
+use App\Http\Resources\ProfileResource;
 
 class PageController extends Controller
 {
-    public function test()
+    public function profile()
     {
-       return 'testing';
+        $user = auth()->user();
+        $data = new ProfileResource($user);
+       return success('success',$data);
     }
 }

@@ -17,6 +17,10 @@ use App\Http\Controllers\Api\RegisterController;
 |
 */
 
- Route::get('/test',[PageController::class, 'test']);
  Route::post('/register',[RegisterController::class, 'register']);
  Route::post('/login',[LoginController::class, 'login']);
+ Route::middleware('auth:api')->group(function(){
+    Route::get('/profile',[PageController::class, 'profile']);
+    Route::post('/logout',[LoginController::class, 'logout']);
+
+ });
