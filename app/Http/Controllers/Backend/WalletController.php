@@ -3,9 +3,13 @@
 namespace App\Http\Controllers\Backend;
 
 use Carbon\Carbon;
+use App\Models\User;
 use App\Models\Wallet;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use App\Helpers\UUIDGenerate;
 use Yajra\DataTables\DataTables;
+use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\Controller;
 
 class WalletController extends Controller
@@ -54,69 +58,76 @@ class WalletController extends Controller
                       ->make(true);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
+   public function addAmount()
+   {
+    $users = User::orderBy('name')->get();
+    return view('backend.wallet.add_amount',['users' => $users]);
+   }
+   public function addAmountStore(Request $request)
+   {
+    if($request->amount < 1000){
+        return back()->withErrors(['fial' => 'The amount must be minimum 1000 MMK'])->withInput();
     }
+    $to_account = User::with('Wallet')->where('id',$request->user_id)->firstOrFail();
+    $to_account_wallet = $to_account->Wallet;
+    DB::beginTransaction();
+    try {
+    $to_account_wallet->increment('amount', $request->amount);
+    $to_account_wallet->update();
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
-    {
-        //
+    $ref_no = UUIDGenerate::refNumber();
+    $to_account_transaction = new Transaction();
+    $to_account_transaction->ref_no = $ref_no;
+    $to_account_transaction->trx_no = UUIDGenerate::trxNumber();
+    $to_account_transaction->user_id = $to_account->id;
+    $to_account_transaction->type = 1;
+    $to_account_transaction->amount = $request->amount;
+    $to_account_transaction->source_id = 0;
+    $to_account_transaction->description = $request->description;
+    $to_account_transaction->save();
+    DB::commit();
+    return redirect()->route('wallet.index')->with('success' , 'Successfully added amount!');
+    } catch (\Exception $error) {
+         DB::rollBack();
+    return back()->withErrors(['fail' => 'Something wrong ' .$error->getMessage()])->withInput();
     }
+   }
+   public function removeAmount()
+   {
+    $users = User::orderBy('name')->get();
+    return view('backend.wallet.remove_amount',['users' => $users]);
+   }
+   public function removeAmountReduce(Request $request)
+   {
+    if($request->amount < 1){
+        return back()->withErrors(['fial' => 'The amount must be at least 1 MMK'])->withInput();
+    }
+    $to_account = User::with('Wallet')->where('id',$request->user_id)->firstOrFail();
+    $to_account_wallet = $to_account->Wallet;
+    DB::beginTransaction();
+    try {
+    if($to_account_wallet->amount < $request->amount ){
+        throw new Exception('The amount is greater than the wallet balance');
+    }
+    $to_account_wallet->decrement('amount', $request->amount);
+    $to_account_wallet->update();
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
+    $ref_no = UUIDGenerate::refNumber();
+    $to_account_transaction = new Transaction();
+    $to_account_transaction->ref_no = $ref_no;
+    $to_account_transaction->trx_no = UUIDGenerate::trxNumber();
+    $to_account_transaction->user_id = $to_account->id;
+    $to_account_transaction->type = 2;
+    $to_account_transaction->amount = $request->amount;
+    $to_account_transaction->source_id = 0;
+    $to_account_transaction->description = $request->description;
+    $to_account_transaction->save();
+    DB::commit();
+    return redirect()->route('wallet.index')->with('success' , 'Successfully reduced amount!');
+    } catch (\Exception $error) {
+         DB::rollBack();
+    return back()->withErrors(['fail' => 'Something wrong ' .$error->getMessage()])->withInput();
     }
+   }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
 }
