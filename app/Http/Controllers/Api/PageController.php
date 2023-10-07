@@ -210,4 +210,152 @@ class PageController extends Controller
         }
         
     }
+    public function scanAndPayForm(Request $request)
+    {
+        $form_account = auth()->user();
+        $to_account = User::where('phone', $request->phone)->first();
+        if(!$to_account){
+            fail('The QR code is invalid',null); 
+        }
+       return  success('Success',[
+        'form_name' => $form_account->name,
+        'form_phone' => $form_account->phone,
+        'to_name' => $to_account->name,
+        'to_phone' => $to_account->phone,
+       ]);
+    }
+    public function scanAndPayConfirm(TransferRequest $request)
+    {
+        $hash_value = $request->hash_value;
+        $userAuth = auth()->user();
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value2 = hash_hmac('sha256',$str,'walletpay123!@#');
+        if($hash_value !== $hash_value2){
+            return fail('The given data is invalid',null);
+        }
+        $to_user = User::where('phone' , $request->phone)->first();
+        if(!$to_user){
+            return fail('The account is invalid',null);
+        }
+        if($userAuth->phone == $request->phone){
+            return fail('The account is invalid',null);
+        }
+        if($request->amount < 1000){
+            return fail('The amount must be minimum 1000 MMK',null);
+        }
+        if(!$userAuth->Wallet || !$to_user->Wallet){
+            return fail('Something wrong .The given data is invalid',null);
+        }
+        if($userAuth->Wallet->amount < $request->amount){
+            return fail('The amount is not enough',null);
+        }
+        return success('Success',[
+            'from_account_name' => $userAuth->name,
+            'from_account_phone' => $userAuth->phone,
+
+            'to_account_name' => $to_user->name,
+            'to_account_phone' => $to_user->phone,
+            'amount' => $request->amount,
+            'description' => $request->description,
+            'hash_value' => $request->hash_value,
+        ]);
+    }
+    public function scanAndPayComplete(TransferRequest $request)
+    {
+        if(!$request->password){
+            return fail('Please fill your password!',null);
+        }
+        $userAuth = auth()->user();
+        if (!Hash::check($request->password,$userAuth->password)) {
+            return fail('The password is correct!',null);
+        }
+        $str = $request->phone.$request->amount.$request->description;
+        $hash_value2 = hash_hmac('sha256',$str,'walletpay123!@#');
+        if($request->hash_value !== $hash_value2){
+            return fail('The given data is invalid',null);
+        }
+        $to_user = User::where('phone' , $request->phone)->first();
+        if(!$to_user){
+            return fail('The account is invalid',null);
+        }
+        
+        if($userAuth->phone == $request->phone){
+            return fail('The account is invalid',null);
+        }
+        if($request->amount < 1000){
+            return fail('The amount must be minimum 1000 MMK',null);
+        }
+        if($userAuth->Wallet->amount < $request->amount){
+            return fail('The amount is not enough',null);
+        }
+        $attributes = $request->validated();
+        $amount = $attributes['amount'];
+        $description = $attributes['description'];
+        if(!$userAuth->Wallet || !$to_user->Wallet){
+            return fail('Something wrong .The given data is invalid',null);
+        }
+        DB::beginTransaction();
+        try {
+            $from_account_wallet = $userAuth->Wallet;
+            $from_account_wallet->decrement('amount', $amount);
+            $from_account_wallet->update();
+
+            $to_account_wallet = $to_user->Wallet;
+            $to_account_wallet->increment('amount', $amount);
+            $to_account_wallet->update();
+
+            $ref_no = UUIDGenerate::refNumber();
+            $from_account_transaction = new Transaction();
+            $from_account_transaction->ref_no = $ref_no;
+            $from_account_transaction->trx_no = UUIDGenerate::trxNumber();
+            $from_account_transaction->user_id = $userAuth->id;
+            $from_account_transaction->type = 2;
+            $from_account_transaction->amount = $amount;
+            $from_account_transaction->source_id = $to_user->id;
+            $from_account_transaction->description = $description;
+            $from_account_transaction->save();
+
+            $to_account_transaction = new Transaction();
+            $to_account_transaction->ref_no = $ref_no;
+            $to_account_transaction->trx_no = UUIDGenerate::trxNumber();
+            $to_account_transaction->user_id = $to_user->id;
+            $to_account_transaction->type = 1;
+            $to_account_transaction->amount = $amount;
+            $to_account_transaction->source_id = $userAuth->id;
+            $to_account_transaction->description = $description;
+            $to_account_transaction->save();
+            //from noti
+            $title = 'E-money transfered';
+            $message = 'Your e-money transfered'.number_format($amount).'MMK to'.$to_user->name.' ('.$to_user->phone.').';
+            $sourceable_id = $from_account_transaction->id;
+            $sourceable_type = Transaction::class;
+            $web_link = route('transaction-detail' , $from_account_transaction->trx_no );
+            $deep_link = [
+                'target' => 'transaction-detail',
+                'parameter' =>[
+                    'trx_no' => $from_account_transaction->trx_no
+                ]
+            ];
+            Notification::send([$userAuth], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
+            //to noti
+            $title = 'E-money received';
+            $message = 'Your e-money received'.number_format($amount).'MMK from'.$userAuth->name.' ('.$userAuth->phone.').';
+            $sourceable_id = $to_account_transaction->id;
+            $sourceable_type = Transaction::class;
+            $web_link = route('transaction-detail' , $to_account_transaction->trx_no );
+            $deep_link = [
+                'target' => 'transaction-detail',
+                'parameter' =>[
+                    'trx_no' => $to_account_transaction->trx_no
+                ]
+            ];
+            Notification::send([$to_user], new GeneralNotification($title,$message,$sourceable_id,$sourceable_type,$web_link,$deep_link));
+            DB::commit();
+            return success('Successfully transfered',['trx_no' => $from_account_transaction->trx_no ]);
+        } catch (\Exception $error) {
+            DB::rollBack();
+            return fail('Something wrong ' .$error->getMessage(),null);
+        }
+        
+    }
 }
