@@ -212,7 +212,7 @@ class PageController extends Controller
             ]);
         }
         $userAuth = auth()->guard('web')->user();
-        if (Hash::check($request->password, $userAuth->password)) {
+        if (!Hash::check($request->password,$userAuth->password)) {
             return response()->json([
                 'status' => 'success',
                 'message' => 'The password is correct!',

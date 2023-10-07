@@ -31,5 +31,6 @@ use App\Http\Controllers\Api\RegisterController;
 
     Route::get('/to-account-verify',[PageController::class, 'toAccountVerify']);
     Route::get('/transfer-confirm',[PageController::class, 'transferConfirm']);
+    Route::post('/transfer-complete',[PageController::class, 'transferComplete']);
 
  });

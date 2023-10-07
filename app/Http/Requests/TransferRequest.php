@@ -26,7 +26,8 @@ class TransferRequest extends FormRequest
         return [
             'phone' => 'required',
             'amount' => 'required|integer',
-            'description' => 'nullable'
+            'description' => 'nullable',
+            'hash_value' => 'required'
         ];
     }
 }
