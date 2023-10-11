@@ -16,7 +16,7 @@
 							<div class="card-body">
 									<div class = "p-2">
                                         @include('backend.layouts.flash')
-										<form action="{{ route('remove.amount.requce') }}" method="post" id="create">
+										<form action="{{ route('remove.amount.reduce') }}" method="post" id="create">
                                             @csrf
                                             <div class="from-group">
                                                 <label for="">Users</label>
