@@ -13,7 +13,7 @@ Route::prefix('admin')->middleware('auth:admin_user')->group(function(){
     Route::get('wallet', [WalletController::class ,'index'])->name('wallet.index');
     Route::get('wallet/add-amount', [WalletController::class,'addAmount'])->name('add.amount');
     Route::post('wallet/add-amount/create', [WalletController::class,'addAmountStore'])->name('add-amount.store');
-    Route::get('wallet/add-remove',[WalletController::class,'removeAmount'])->name('remove.amount');
-    Route::post('wallet/add-remove/update',[WalletController::class,'removeAmountReduce'])->name('remove.amount.reduce');
+    Route::get('wallet/remove-amount',[WalletController::class,'removeAmount'])->name('remove.amount');
+    Route::post('wallet/remove-amount/update',[WalletController::class,'removeAmountReduce'])->name('remove.amount.reduce');
 
 });
