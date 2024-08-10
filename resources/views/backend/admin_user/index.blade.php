@@ -3,9 +3,9 @@
 @section('content')
 <main class="content">
 				<div class="container-fluid p-0">
-					<h1 class="h3 mb-3"><strong>Admin User</strong></h1>
+					<h1 class="h3 mb-3"><strong>Admin</strong></h1>
 					<div class="py-3 d-flex flex-row-reverse">
-						<a href="{{ route('admin-user.create') }}" class="btn btn-secondary">Admin User Create <i class="align-middle" data-feather="plus-circle"></i></a>
+						<a href="{{ route('admin-user.create') }}" class="btn btn-secondary">Admin Create <i class="align-middle" data-feather="plus-circle"></i></a>
 					</div>
                     <div class="">
 						<div class="card">

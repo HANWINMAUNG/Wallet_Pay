@@ -9,19 +9,34 @@
                     <input type="hidden" class="hash-value"  name="hash_value" value="">
                     <input type="hidden" name="phone" class="phone" value="{{ $to_account->phone }}">
                     <div class="form-group mb-3">
+                    @php
+                        $language = session('language');
+                    @endphp
+                            @if($language == '' || $language === 'en')
                             <label for="">From</label>
+                            @else
+                            <label for="">မှ</label>
+                            @endif
                             <p class="mb-1 text-muted">{{ $form_account->name }}</p>
                             <p class="mb-1 text-muted">{{ $form_account->phone }}</p>
                     </div>
 
                     <div class="form-group mb-3">
+                            @if($language == '' || $language === 'en')
                             <label for="">To</label>
+                            @else
+                            <label for="">သို့</label>
+                            @endif
                             <p class="mb-1 text-muted">{{ $to_account->name }}</p>
                             <p class="mb-1 text-muted">{{ $to_account->phone }}</p>
                     </div>
                     
                     <div class="form-group mb-2">
+                        @if($language == '' || $language === 'en')
                         <label for="">Amount (MMK)</label>
+                        @else
+                            <label for="">ငွေပမာဏ(ကျပ်)</label>
+                        @endif
                         <input type="number" name="amount" class="form-control @error('amount') is-invalid @enderror amount" value="{{ old('amount') }}">
                         @error('amount')
                                     <span class="invalid-feedback" role="alert">
@@ -30,7 +45,11 @@
                         @enderror
                     </div>
                     <div class="form-group mb-2">
-                        <label for="">Description</label>
+                        @if($language == '' || $language === 'en')
+                        <label for="">Note</label>
+                        @else
+                            <label for="">မှတ်ချက်</label>
+                        @endif
                         <textarea  name="description" class="form-control description">{{ old('description') }}</textarea>
                     </div>
                     <button class="btn btn-theme btn-block mt-5 form-control submit-btn">Continue</button>

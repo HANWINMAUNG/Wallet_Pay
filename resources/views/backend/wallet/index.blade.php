@@ -5,8 +5,8 @@
 				<div class="container-fluid p-0">
 					<h1 class="h3 mb-3"><strong>Wallet</strong></h1>
 					<div class="py-3 d-flex flex-row-reverse">
-					    <a href="{{ route('remove.amount') }}" class="btn btn-danger">Remove Amount <i class="align-middle" data-feather="minus"></i></a>
-						<a href="{{ route('add.amount') }}" class="btn btn-secondary" style="margin-right:10px;">Amount Amount <i class="align-middle" data-feather="plus-circle"></i></a>
+					    <a href="{{ route('remove.amount') }}" class="btn btn-danger">Cash Out <i class="align-middle" data-feather="minus"></i></a>
+						<a href="{{ route('add.amount') }}" class="btn btn-secondary" style="margin-right:10px;">Cash In <i class="align-middle" data-feather="plus-circle"></i></a>
 					</div>
                     <div class="">
 						<div class="card">

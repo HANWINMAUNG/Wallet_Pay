@@ -2,6 +2,9 @@
 @section('title','Transfer Confirmation')
 @section('content')
    <div class="transfer w-100">
+                   @php
+                        $language = session('language');
+                    @endphp
         <div class="card my-3">
             <div class="card-body">
                 @include('frontend.layouts.page_info')
@@ -12,21 +15,37 @@
                     <input type="hidden" name="amount" value="{{ $attributes['amount'] }}">
                     <input type="hidden" name="description" value="{{ $attributes['description'] }}">
                     <div class="form-group mb-3">
+                            @if($language == '' || $language === 'en')
                             <label for="">From</label>
+                            @else
+                            <label for="">မှ</label>
+                            @endif
                             <p class="mb-1 text-muted">{{ $userAuth->name }}</p>
                             <p class="mb-1 text-muted">{{ $userAuth->phone }}</p>
                     </div> 
                     <div class="form-group mb-2">
-                        <label for="">To</label>
+                            @if($language == '' || $language === 'en')
+                            <label for="">To</label>
+                            @else
+                            <label for="">သို့</label>
+                            @endif
                         <p class="mb-0 text-muted">{{ $to_user->name }}</p>
                         <p class=" text-muted">{{ $attributes['phone'] }}</p>
                     </div>
                     <div class="form-group mb-2">
+                        @if($language == '' || $language === 'en')
                         <label for="">Amount (MMK)</label>
+                        @else
+                            <label for="">ငွေပမာဏ(ကျပ်)</label>
+                        @endif
                         <p class=" text-muted">{{ number_format($attributes['amount']) }}</p>
                     </div>
                     <div class="form-group mb-2">
-                        <label for="">Description</label>
+                        @if($language == '' || $language === 'en')
+                        <label for="">Note</label>
+                        @else
+                            <label for="">မှတ်ချက်</label>
+                        @endif
                         <p class=" text-muted">{{ $attributes['description'] }}</p>
                     </div>
                     <button type="submit" class="btn btn-theme btn-block mt-5 form-control complete-btn">Confirm</button>

@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\LanguageController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Frontend\PageController;
 use App\Http\Controllers\Auth\AdminLoginController;
@@ -23,7 +24,8 @@ Route::post('logout' , [LoginController::class,'logout'])->name('user.logout');
 
 Route::get('admin/login',[AdminLoginController::class, 'showLoginForm'])->name('get.admin.login');
 Route::post('admin/login',[AdminLoginController::class, 'login'])->name('post.admin.login');
-Route::post('admin/logout',[AdminLoginController::class, 'logout'])->name('admin.logout');
+Route::post('admin/logout',[AdminLoginController::class, 'Logout'])->name('admin.logout');
+Route::post('language-switch',[LanguageController::class,'languageSwitch'])->name('language.switch');
 //home
 Route::middleware('auth')->group(function(){
     Route::get('/',[PageController::class, 'home'])->name('home');

@@ -224,3 +224,6 @@ a:hover{
    right:0px;
    padding:3px;
 }
+.background-banner{
+	background-image:url('../../../images/m_pay_logo.svg');
+}

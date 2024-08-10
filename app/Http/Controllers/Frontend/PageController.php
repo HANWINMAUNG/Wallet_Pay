@@ -11,6 +11,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\TransferRequest;
+use Illuminate\Support\Facades\Session;
 use App\Notifications\GeneralNotification;
 use App\Http\Requests\UpdatePasswordRequest;
 use Illuminate\Support\Facades\Notification;
@@ -53,6 +54,7 @@ class PageController extends Controller
     }
     public function wallet()
     {
+        dd(Session::get('language'));
         $user = auth()->guard('web')->user();
         return view('frontend.wallet',['user' => $user]);
     }

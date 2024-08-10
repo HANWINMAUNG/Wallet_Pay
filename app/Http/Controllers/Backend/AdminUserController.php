@@ -118,12 +118,11 @@ class AdminUserController extends Controller
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\Response 
      */
     public function update(UpdateAdminUserRequest $request,$id)
     {
-         $admin_user = AdminUser::findOrFail($id);
-        
+        $admin_user = AdminUser::findOrFail($id); 
         $admin_user->update();
         return redirect()->route('admin-user.index')->with('success' , 'Admin is successfully updated!'); 
     }

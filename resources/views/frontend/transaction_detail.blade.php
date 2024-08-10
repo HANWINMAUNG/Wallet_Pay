@@ -2,6 +2,9 @@
 @section('title','Transaction Detail')
 @section('content')
    <div class="transaction-detail" style="margin-top:20px;">
+                    @php
+                        $language = session('language');
+                    @endphp
                 <div class="card">
                     <div class="card-body">
                        <div class="text-center mb-3">
@@ -13,49 +16,89 @@
                             <p class="mb-4 text-center text-danger">-{{number_format($transaction->amount)}} <small>MMK</small></p>
                        @endif
                        <div class="d-flex justify-content-between">
+                          @if($language == '' || $language === 'en')
                           <p class="text-muted mb-0">Trx ID</p>
+                          @else
+                          <p class="text-muted mb-0">ငွေလွဲရန်လုပ်ငန်းစဉ်နံပါတ်</p>
+                          @endif
                           <p class="mb-0">{{ $transaction->trx_no }}</p>
                        </div>
                        <hr>
                        <div class="d-flex justify-content-between">
+                          @if($language == '' || $language === 'en')
                           <p class="text-muted mb-0">Reference Number</p>
+                          @else
+                          <p class="text-muted mb-0">အကောင့်ပိုင်ရှင်၏အကောင့်အမှတ်</p>
+                          @endif
                           <p class="mb-0">{{ $transaction->ref_no }}</p>
                        </div>
                        <hr>
                        <div class="d-flex justify-content-between">
+                          @if($language == '' || $language === 'en')
                           <p class="text-muted mb-0">Type</p>
+                          @else
+                          <p class="text-muted mb-0">အမျိုးအစား</p>
+                          @endif
                           <p class="mb-0">
                                 @if($transaction->type == 1)
+                                   @if($language == '' || $language === 'en')
                                     <span class="badge rounded-pill bg-success">Income</span>
+                                    @else
+                                    <span class="badge rounded-pill bg-success">ငွေဝင်</span>
+                                    @endif
                                  @elseif($transaction->type == 2)
+                                    @if($language == '' || $language === 'en')
                                     <span class="badge rounded-pill bg-danger">Expense</span>
+                                    @else
+                                    <span class="badge rounded-pill bg-danger">ငွေထွက်</span>
+                                    @endif
                                 @endif       
                           </p>
                        </div>
                        <hr>
                        <div class="d-flex justify-content-between">
+                          @if($language == '' || $language === 'en')
                           <p class="text-muted mb-0">Amount</p>
+                          @else
+                          <p class="text-muted mb-0">ငွေပမာဏ(ကျပ်)</p>
+                          @endif
                           <p class="mb-0">{{number_format($transaction->amount)}} MMK</p>
                        </div>
                        <hr>
                        <div class="d-flex justify-content-between">
+                          @if($language == '' || $language === 'en')
                           <p class="text-muted mb-0">Date and Time</p>
+                          @else
+                          <p class="text-muted mb-0">အချိန် နှင့် နေ့</p>
+                          @endif
                           <p class="mb-0">{{ $transaction->created_at }}</p>
                        </div>
                        <hr>
                        <div class="d-flex justify-content-between">
                           <p class="text-muted mb-0">
                                 @if($transaction->type == 1)
-                                    <span class="text-success">From</span>
-                                    @elseif($transaction->type == 2)
-                                    <span class="text-danger">To</span>
+                                    @if($language == '' || $language === 'en')
+                                    <span class="text-success">To</span>
+                                    @else
+                                    <span class="text-success">မှ</span>
+                                    @endif
+                                 @elseif($transaction->type == 2)
+                                    @if($language == '' || $language === 'en')
+                                    <span class="text-danger">From</span>
+                                    @else
+                                    <span class="text-danger">သို့</span>
+                                    @endif
                                 @endif 
                           </p>
                           <p class="mb-0">{{ $transaction->Source ? $transaction->Source->name : '-' }}</p>
                        </div>
                        <hr>
                        <div class="d-flex justify-content-between">
-                          <p class="text-muted mb-0">Description</p>
+                          @if($language == '' || $language === 'en')
+                          <p class="text-muted mb-0">Note</p>
+                          @else
+                          <p class="text-muted mb-0">မှတ်ချက်</p>
+                          @endif
                           <p class="mb-0">{{ $transaction->description }}</p>
                        </div>
                     </div>

@@ -94,6 +94,10 @@ return [
     */
 
     'fallback_locale' => 'en',
+    'available_locales' => [
+            'English' => 'en',
+            'Myanmar' => 'my',
+            ],
 
     /*
     |--------------------------------------------------------------------------

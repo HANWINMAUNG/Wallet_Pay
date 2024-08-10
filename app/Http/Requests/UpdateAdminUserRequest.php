@@ -28,7 +28,7 @@ class UpdateAdminUserRequest extends FormRequest
             return [
                 'name' =>'required',
                 'email' =>'required|email|unique:admin_users,email,' . $id,
-                 'phone' =>'required|unique:admin_users,phone,' . $id,
+                'phone' =>'required|min:9|max:11|unique:admin_users,phone,' . $id,
             ];
         
     }

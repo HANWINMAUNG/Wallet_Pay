@@ -1,30 +1,31 @@
 @extends('backend.layouts.app')
-@section('admin_user','active')
+@section('user','active')
 @section('content')
 <main class="content">
 				<div class="container-fluid p-0">
-					<h1 class="h3 mb-3"><strong>Admin Create</strong></h1>
+					<h1 class="h3 mb-3"><strong>User Edit</strong></h1>
 					<div class="py-3 d-flex flex-row-reverse">
-						<button class="btn btn-secondary back-btn">Back <i class="align-middle" data-feather="arrow-left"></i></a>
+						<button class="btn btn-secondary back-btn">Back <i class="align-middle" data-feather="arrow-left"></i></button>
 					</div>
                     <div class="">
 						<div class="card">
 							<div class="card-body">
 									<div class = "p-2">
                                         @include('backend.layouts.flash')
-										<form action="{{ route('admin-user.store') }}" method="post" id="create">
+										<form action="{{ route('user.update' , $user->id) }}" method="post" id="update">
                                             @csrf
+                                            @method('PATCH')
                                             <div class="from-group">
                                                 <label for="">Name</label>
-                                                <input type="text" name="name" class="form-control">
+                                                <input type="text" name="name" value="{{ $user->name }}" class="form-control">
                                             </div>
                                             <div class="from-group mt-2">
                                                 <label for="">Email</label>
-                                                <input type="email" name="email" class="form-control">
+                                                <input type="email" name="email"  value="{{ $user->email }}" class="form-control">
                                             </div>
                                             <div class="from-group mt-2">
                                                 <label for="">Phone</label>
-                                                <input type="number" name="phone" class="form-control">
+                                                <input type="number" name="phone" value="{{ $user->phone }}" class="form-control">
                                             </div>
                                             <div class="from-group mt-2">
                                                 <label for="">Password</label>
@@ -43,7 +44,7 @@
 </main> 
 @endsection
 @push('script')
-{!! JsValidator::formRequest('App\Http\Requests\AdminUserRequest' , '#create') !!}
+{!! JsValidator::formRequest('App\Http\Requests\UpdateUserRequest' , '#update') !!}
 <script type="text/javascript">
 </script>
 @endpush

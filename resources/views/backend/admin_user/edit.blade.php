@@ -3,7 +3,7 @@
 @section('content')
 <main class="content">
 				<div class="container-fluid p-0">
-					<h1 class="h3 mb-3"><strong>Admin User Edit</strong></h1>
+					<h1 class="h3 mb-3"><strong>Admin Edit</strong></h1>
 					<div class="py-3 d-flex flex-row-reverse">
 						<button class="btn btn-secondary back-btn">Back <i class="align-middle" data-feather="arrow-left"></i></button>
 					</div>
